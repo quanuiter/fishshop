@@ -13,3 +13,7 @@ Route::get('/market', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/chinhsach', function () {
+    return view('chinhsach');
+});
