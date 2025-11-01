@@ -8,6 +8,7 @@
     position: relative;
     height: 90vh;
     overflow: hidden;
+    font-family: 'Poppins', sans-serif;
   }
   .slide {
     position: absolute;
@@ -20,6 +21,12 @@
   .slide.active {
     opacity: 1;
   }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
   .hero-content {
     position: absolute;
     top: 50%;
@@ -27,47 +34,67 @@
     transform: translateY(-50%);
     z-index: 2;
     color: #fff;
+    max-width: 500px;
   }
   .hero-content h1 {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 700;
+    line-height: 1.2;
   }
   .hero-content p {
-    font-size: 1.2rem;
-    color: #ccc;
+    font-size: 1.1rem;
+    color: #e5e7eb;
+    margin-top: 10px;
+  }
+  .hero-content .btn-shop {
+    background-color: #fbbf24;
+    color: #0f5132;
+    border: none;
+    padding: 10px 28px;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+  }
+  .hero-content .btn-shop:hover {
+    background-color: #ffe176;
+    transform: translateY(-2px);
   }
   .slider-nav {
     position: absolute;
     bottom: 30px;
     left: 10%;
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    z-index: 2;
   }
   .nav-dot {
-    width: 40px;
+    width: 35px;
     height: 4px;
-    background: #666;
+    background: rgba(255,255,255,0.4);
     border-radius: 2px;
     cursor: pointer;
     transition: background 0.3s;
   }
   .nav-dot.active {
-    background: #7055ff;
+    background: #fbbf24;
   }
 </style>
 
 <div class="hero-slider">
-  <!-- Các slide -->
+  <!-- Slide images -->
   <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1600&q=80');"></div>
   <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');"></div>
   <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1600&q=80');"></div>
   <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80');"></div>
 
-  <!-- Nội dung -->
+  <!-- Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Content -->
   <div class="hero-content">
     <h1>Khám phá thế giới câu cá</h1>
-    <p>Trang thiết bị cao cấp cho người yêu sông nước</p>
-    <a href="/market" class="btn btn-primary mt-3">Mua ngay</a>
+    <p>Trang thiết bị chính hãng – đồng hành cùng đam mê sông nước.</p>
+    <a href="/market" class="btn btn-shop mt-3">Mua ngay</a>
   </div>
 
   <!-- Navigation -->
@@ -98,7 +125,7 @@
 
   function resetTimer() {
     clearInterval(timer);
-    timer = setInterval(nextSlide, 5000); // đổi slide sau 5 giây
+    timer = setInterval(nextSlide, 5000);
   }
 
   dots.forEach(dot => {

@@ -4,61 +4,85 @@
 
 @section('content')
 <style>
-  body { background-color: #11131a; color: white; font-family: 'Poppins', sans-serif; }
+  body { 
+    background-color: #f8faf8; 
+    color: #333; 
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Banner */
   .market-banner {
-    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') center/cover;
-    height: 40vh;
     position: relative;
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') center/cover;
+    height: 45vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: start;
+    color: white;
   }
   .market-banner::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: linear-gradient(to top, rgba(15,107,61,0.8), rgba(15,107,61,0.3));
   }
   .market-banner h1 {
-    position: absolute;
-    bottom: 20px;
-    left: 50px;
-    font-size: 2.5rem;
+    position: relative;
     z-index: 2;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0 0 30px 60px;
   }
+
+  /* Category Bar */
   .category-bar {
-    background: rgba(0,0,0,0.6);
+    background-color: #fff;
     display: flex;
     justify-content: center;
-    gap: 40px;
-    padding: 20px 0;
+    gap: 50px;
+    padding: 30px 0;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #e5e7eb;
   }
   .category-item {
     text-align: center;
-    color: #ccc;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .category-item:hover {
-    color: #7055ff;
+    color: #0f5132;
+    font-weight: 600;
+    transition: all 0.3s ease;
   }
   .category-item img {
-    width: 40px;
-    height: 40px;
-    filter: brightness(0.8);
+    width: 55px;
+    height: 55px;
+    margin-bottom: 8px;
+    transition: transform 0.3s ease;
   }
+  .category-item:hover img {
+    transform: scale(1.1);
+  }
+  .category-item:hover {
+    color: #fbbf24;
+  }
+
+  /* Filter Bar */
   .filter-bar {
-    background-color: #1a1a1d;
+    background-color: #0f6b3d;
     padding: 15px 40px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
   }
   .filter-select {
-    background-color: #222;
-    color: #ccc;
-    border: none;
-    padding: 8px 15px;
+    background-color: #fff;
+    color: #0f5132;
+    border: 1px solid #ccc;
+    padding: 8px 14px;
     border-radius: 6px;
     outline: none;
+    font-weight: 500;
+  }
+  .filter-select:hover {
+    border-color: #fbbf24;
   }
   .search-box {
     margin-left: auto;
@@ -66,19 +90,23 @@
     align-items: center;
   }
   .search-box input {
-    background-color: #222;
-    border: none;
-    color: white;
+    background-color: #fff;
+    border: 1px solid #ccc;
     padding: 8px 15px;
     border-radius: 6px 0 0 6px;
     width: 250px;
   }
   .search-box button {
-    background-color: #7055ff;
+    background-color: #fbbf24;
     border: none;
-    padding: 8px 15px;
+    padding: 8px 18px;
     border-radius: 0 6px 6px 0;
-    color: white;
+    font-weight: 600;
+    color: #0f5132;
+    transition: 0.3s;
+  }
+  .search-box button:hover {
+    background-color: #ffe176;
   }
 </style>
 
@@ -90,15 +118,15 @@
 <!-- Category bar -->
 <div class="category-bar">
   <div class="category-item">
-    <img src="https://cdn-icons-png.flaticon.com/512/415/415734.png" alt="Can cau"><br>
+    <img src="https://cdn-icons-png.flaticon.com/512/415/415734.png" alt="Cần câu"><br>
     Cần câu
   </div>
   <div class="category-item">
-    <img src="https://cdn-icons-png.flaticon.com/512/3050/3050182.png" alt="May cau"><br>
+    <img src="https://cdn-icons-png.flaticon.com/512/3050/3050182.png" alt="Máy câu"><br>
     Máy câu
   </div>
   <div class="category-item">
-    <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Luoi cau"><br>
+    <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Lưỡi câu"><br>
     Lưỡi câu
   </div>
   <div class="category-item">
@@ -144,5 +172,4 @@
     <button>Tìm kiếm</button>
   </div>
 </div>
-
 @endsection
