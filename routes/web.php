@@ -21,3 +21,6 @@ Route::get('/chinhsach', function () {
 Route::get('/tintuc', function () {
     return view('tintuc');
 });
+Route::get('/khuyenmai', function () {
+    return view('khuyenmai');
+});
