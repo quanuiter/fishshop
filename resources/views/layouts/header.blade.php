@@ -33,7 +33,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Bài viết mới</a></li>
-            <li><a class="dropdown-item" href="#">Sự kiện</a></li>
+            <li><a class="dropdown-item" href="/tintuc">Tin tức</a></li>
             <li><a class="dropdown-item" href="#">Khuyến mãi</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Xem tất cả</a></li>
