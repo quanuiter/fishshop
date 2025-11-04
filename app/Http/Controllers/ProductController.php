@@ -12,7 +12,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // Lấy danh sách sản phẩm (demo)
+        $products = Product::all(); // hoặc mảng mẫu nếu chưa có DB
+        return view('market.index', compact('products'));
     }
 
     /**
@@ -34,9 +36,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('market.show', compact('product'));
     }
 
     /**
