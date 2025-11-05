@@ -77,7 +77,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Mồi giả hình cá nhỏ, mềm và linh hoạt, thu hút cá lớn.',
                 'price' => 50000,
                 'stock' => 80,
-                'image' => 'https://images.unsplash.com/photo-1615473955294-62c1d0cf4c7e?auto=format&fit=crop&w=800&q=80',
+                'image' => 'https://shopcancau.vn/uploads/source/Luoi%20moi%20phao/moi%20gia/TNT/F35C/nhai-hoi-tnt-f35c-1.jpg',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

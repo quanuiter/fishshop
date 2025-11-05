@@ -23,3 +23,5 @@ Route::get('/tintuc', function () {
 Route::get('/khuyenmai', function () {
     return view('khuyenmai');
 });
+Route::get('/market/filter', [ProductController::class, 'filter'])->name('market.filter');
+

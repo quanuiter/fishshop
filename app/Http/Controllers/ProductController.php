@@ -65,4 +65,39 @@ class ProductController extends Controller
     {
         //
     }
+    public function filter(Request $request)
+    {
+        $query = Product::query();
+
+        // Lọc theo category
+        if ($request->category && $request->category != 'all') {
+            $query->where('category_id', $request->category);
+        }
+
+        // Lọc theo tên
+        if ($request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Sắp xếp
+        switch ($request->sort) {
+            case 'price_asc':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+        }
+
+        $products = $query->get();
+
+        // Trả về partial HTML (để ajax thay thế)
+        return view('market.partials.products', compact('products'))->render();
+    }
 }

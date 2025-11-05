@@ -267,6 +267,16 @@
       background-color: #ffe176;
       transform: scale(1.02);
     }
+
+    .category-item.active-category .category-item-icon {
+      background-color: #207a77ff !important;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+      transform: scale(1.05);
+    }
+
+    .category-item.active-category span {
+      color: #e1ebf5ff;
+    }
   </style>
 
   <!-- Banner now contains both title and category overlay -->
@@ -275,37 +285,37 @@
 
     <!-- Category bar overlay on banner -->
     <div class="category-bar">
-      <div class="category-item">
+      <div class="category-item" data-category="1">
         <div class="category-item-icon">
           <img src="{{ url('image/icons/fishrop.png') }}" alt="Cần câu">
         </div>
         <span>Cần câu</span>
       </div>
-      <div class="category-item">
+      <div class="category-item" data-category="2">
         <div class="category-item-icon">
           <img src="{{ url('image/icons/machinefishrop.png') }}" alt="Máy câu">
         </div>
         <span>Máy câu</span>
       </div>
-      <div class="category-item">
+      <div class="category-item" data-category="3">
         <div class="category-item-icon">
           <img src="{{ url('image/icons/hook.png') }}" alt="Lưỡi câu">
         </div>
         <span>Lưỡi câu</span>
       </div>
-      <div class="category-item">
+      <div class="category-item" data-category="4">
         <div class="category-item-icon">
           <img src="{{ url('image/icons/moicau.png') }}" alt="Mồi câu">
         </div>
         <span>Mồi câu</span>
       </div>
-      <div class="category-item">
+      <div class="category-item" data-category="5">
         <div class="category-item-icon">
           <img src="{{ url('image/icons/tool.png') }}" alt="Phụ kiện">
         </div>
         <span>Phụ kiện</span>
       </div>
-      <div class="category-item">
+      <div class="category-item" data-category="all">
         <div class="category-item-icon">
           <img src="{{ url('image/icons/all.png') }}" alt="Xem Ttất">
         </div>
@@ -316,22 +326,23 @@
 
   <!-- Filter bar with white background below banner -->
   <div class="filter-bar">
-    <select class="filter-select">
-      <option>Loại sản phẩm</option>
-      <option>Cần câu</option>
-      <option>Máy câu</option>
-      <option>Lưỡi câu</option>
+    <select id="sortSelect" class="filter-select">
+      <option value="">Sắp xếp</option>
+      <option value="price_asc">Giá tăng dần</option>
+      <option value="price_desc">Giá giảm dần</option>
+      <option value="name_asc">Tên A-Z</option>
+      <option value="name_desc">Tên Z-A</option>
     </select>
 
     <div class="search-box">
-      <input type="text" placeholder="Nhập tên sản phẩm...">
-      <button>Tìm kiếm</button>
+      <input type="text" id="searchInput" placeholder="Nhập tên sản phẩm...">
+      <button id="searchBtn">Tìm kiếm</button>
     </div>
   </div>
 
   <!-- Thêm product grid để hiển thị sản phẩm -->
   <div class="products-container">
-    <div class="products-grid">
+    <div class="products-grid" id="productGrid">
       @foreach ($products as $product)
         <div class="product-card" data-url="{{ route('product.show', $product->id) }}">
           <div class="product-image">
@@ -342,20 +353,63 @@
             <div class="product-price">
               <span class="currency">₫</span> {{ number_format($product->price, 0, ',', '.') }}
             </div>
-            <div class="product-actions">
-              <button class="btn-add-cart">Thêm vào giỏ</button>
-            </div>
           </div>
         </div>
       @endforeach
     </div>
   </div>
   <script>
+    // chuyển sang trang chi tiết sản phẩm
     document.querySelectorAll('.product-card').forEach(card => {
       card.addEventListener('click', () => {
         const url = card.getAttribute('data-url');
         if (url) window.location.href = url;
       });
     });
+
+    // =======================
+    //  AJAX FILTER SYSTEM
+    // =======================
+    let currentCategory = 'all'; // lưu category hiện tại
+
+    function setActiveCategory(catElement) {
+      document.querySelectorAll('.category-item').forEach(c => c.classList.remove('active-category'));
+      catElement.classList.add('active-category');
+    }
+
+    function fetchProducts(params = {}) {
+      params.category = currentCategory;
+      let query = new URLSearchParams(params).toString();
+
+      fetch(`{{ route('market.filter') }}?${query}`)
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('productGrid').innerHTML = html;
+          document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', () => window.location.href = card.dataset.url);
+          });
+        });
+    }
+
+    // --- Event listeners ---
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      fetchProducts({ search: document.getElementById('searchInput').value });
+    });
+
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+      fetchProducts({ sort: e.target.value, search: document.getElementById('searchInput').value });
+    });
+
+    document.querySelectorAll('.category-item').forEach(cat => {
+      cat.addEventListener('click', () => {
+        currentCategory = cat.getAttribute('data-category');
+        setActiveCategory(cat); // đổi màu category được chọn
+        fetchProducts(); // load sản phẩm theo category
+      });
+    });
+
+    // mặc định chọn "Xem tất"
+    setActiveCategory(document.querySelector('.category-item[data-category="all"]'));
   </script>
+
 @endsection

@@ -1,0 +1,13 @@
+@foreach ($products as $product)
+    <div class="product-card" data-url="{{ route('product.show', $product->id) }}">
+        <div class="product-image">
+            <img src="{{ $product->image_url ?? 'https://via.placeholder.com/300x200' }}" alt="{{ $product->name }}">
+        </div>
+        <div class="product-info">
+            <h3 class="product-name">{{ $product->name }}</h3>
+            <div class="product-price">
+                <span class="currency">₫</span> {{ number_format($product->price, 0, ',', '.') }}
+            </div>
+        </div>
+    </div>
+@endforeach
