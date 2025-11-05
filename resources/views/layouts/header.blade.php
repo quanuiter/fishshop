@@ -59,6 +59,9 @@
         @else
           <div class="user-menu">
             <span class="user-greeting">Xin chào, {{ Auth::user()->name }}</span>
+            @if (Auth::user()->is_admin ?? false)
+              <a href="{{ url('/admin') }}" class="btn btn-outline-nav btn-sm ms-2">Quản trị</a>
+            @endif
             <form method="POST" action="{{ route('logout') }}" class="d-inline">
               @csrf
               <button type="submit" class="btn btn-nav-logout btn-sm ms-2">
@@ -269,4 +272,3 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   }
 </style>
-
