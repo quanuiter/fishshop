@@ -10,107 +10,205 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('products')->insert([
+        $now = Carbon::now();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('product_images')->truncate();
+        DB::table('product_variants')->truncate();
+        DB::table('products')->truncate();
+        DB::table('categories')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        // ===========================
+        // CATEGORIES
+        // ===========================
+        $categories = [
+            ['name' => 'Cần câu',   'slug' => 'can-cau'],
+            ['name' => 'Máy câu',   'slug' => 'may-cau'],
+            ['name' => 'Dây câu',   'slug' => 'day-cau'],
+            ['name' => 'Mồi & Lưỡi','slug' => 'moi-luoi'],
+            ['name' => 'Phụ kiện',  'slug' => 'phu-kien'],
+        ];
+        foreach ($categories as &$cat) {
+            $cat['created_at'] = $now;
+            $cat['updated_at'] = $now;
+        }
+        DB::table('categories')->insert($categories);
+        $catId = fn($slug) => DB::table('categories')->where('slug', $slug)->value('id');
+
+        // ===========================
+        // PRODUCTS
+        // ===========================
+        $data = [
+            // 🐟 CẦN CÂU
             [
-                'category_id' => 1,
-                'name' => 'Cần câu Shimano 2.7m',
-                'description' => 'Cần câu chuyên nghiệp làm bằng carbon, nhẹ và dẻo, phù hợp cho mọi địa hình câu.',
-                'price' => 450000,
-                'stock' => 20,
-                'image' => 'https://images.unsplash.com/photo-1534080686848-b6b6b8b0b5d5?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'category' => 'can-cau',
+                'name' => 'Cần câu Shimano Exage 2.7m',
+                'brand' => 'Shimano',
+                'origin' => 'Nhật Bản',
+                'warranty' => '12 tháng',
+                'material' => 'Carbon',
+                'year' => 2024,
+                'desc' => 'Cần carbon siêu nhẹ, độ nhạy cao, cân bằng tốt cho cả câu sông và hồ.',
+                'images' => [
+                    'https://shopcancau.vn/uploads/source/C%E1%BA%A7n%20c%C3%A2u/Daiwa/Saltiga%20AP/can-jig-daiwa-saltiga-airportable-3.jpg',
+                    'https://shopcancau.vn/uploads/source/C%E1%BA%A7n%20c%C3%A2u/Daiwa/Saltiga%20AP/can-jig-daiwa-saltiga-airportable-5.jpg',
+                ],
+                'variants' => [
+                    ['sku' => 'EXAGE27-BLK', 'price' => 450000, 'stock' => 20, 'color' => 'Đen', 'size' => '2.7m', 'image' => 'https://shopcancau.vn/uploads/source/C%E1%BA%A7n%20c%C3%A2u/Daiwa/Saltiga%20AP/can-jig-daiwa-saltiga-airportable-3.jpg'],
+                    ['sku' => 'EXAGE30-SLV', 'price' => 490000, 'stock' => 10, 'color' => 'Bạc', 'size' => '3.0m', 'image' => 'https://shopcancau.vn/uploads/source/C%E1%BA%A7n%20c%C3%A2u/Daiwa/Saltiga%20AP/can-jig-daiwa-saltiga-airportable-3.jpg'],
+                ]
             ],
             [
-                'category_id' => 2,
+                'category' => 'can-cau',
+                'name' => 'Cần câu Daiwa Samurai 3.6m',
+                'brand' => 'Daiwa',
+                'origin' => 'Nhật Bản',
+                'warranty' => '24 tháng',
+                'material' => 'Carbon Composite',
+                'year' => 2023,
+                'desc' => 'Dòng cần phổ thông, nhẹ, bền, phù hợp người mới bắt đầu.',
+                'images' => [
+                    'https://images.unsplash.com/photo-1613280647893-65ac9b7f35f8?auto=format&w=900',
+                ],
+                'variants' => [
+                    ['sku' => 'SAM36-GRN', 'price' => 380000, 'stock' => 25, 'color' => 'Xanh lá', 'size' => '3.6m', 'image' => 'https://images.unsplash.com/photo-1613280647893-65ac9b7f35f8?auto=format&w=800'],
+                    ['sku' => 'SAM30-RED', 'price' => 350000, 'stock' => 30, 'color' => 'Đỏ', 'size' => '3.0m', 'image' => 'https://images.unsplash.com/photo-1620221339866-d24064b4b6fa?auto=format&w=800'],
+                ]
+            ],
+
+            // ⚙️ MÁY CÂU
+            [
+                'category' => 'may-cau',
                 'name' => 'Máy câu Daiwa BG 4000',
-                'description' => 'Máy câu kim loại cao cấp với hệ thống drag mạnh mẽ và bền bỉ.',
-                'price' => 1250000,
-                'stock' => 15,
-                'image' => 'https://images.unsplash.com/photo-1508612761958-e931e9f1a3d0?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'brand' => 'Daiwa',
+                'origin' => 'Nhật Bản',
+                'warranty' => '12 tháng',
+                'material' => 'Nhôm CNC',
+                'year' => 2024,
+                'desc' => 'Máy câu bền, chống nước tốt, chịu tải cao cho cá lớn.',
+                'images' => [
+                    'https://images.unsplash.com/photo-1508612761958-e931e9f1a3d0?auto=format&w=900',
+                ],
+                'variants' => [
+                    ['sku' => 'BG4000-SLV', 'price' => 1250000, 'stock' => 15, 'color' => 'Bạc', 'size' => '4000', 'image' => 'https://shopcancau.vn/uploads/source/C%E1%BA%A7n%20c%C3%A2u/Daiwa/Saltiga%20AP/can-jig-daiwa-saltiga-airportable-7.jpg'],
+                    ['sku' => 'BG5000-BLK', 'price' => 1390000, 'stock' => 10, 'color' => 'Đen', 'size' => '5000', 'image' => 'https://images.unsplash.com/photo-1517697471339-4aa32003c11a?auto=format&w=800'],
+                ]
             ],
             [
-                'category_id' => 3,
-                'name' => 'Dây câu carbon siêu bền 100m',
-                'description' => 'Dây carbon chống xoắn, chịu tải cao, thích hợp câu cá lớn.',
-                'price' => 80000,
-                'stock' => 50,
-                'image' => 'https://images.unsplash.com/photo-1610970878451-81747de2351d?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'category' => 'may-cau',
+                'name' => 'Máy Shimano Sienna 2500',
+                'brand' => 'Shimano',
+                'origin' => 'Malaysia',
+                'warranty' => '12 tháng',
+                'material' => 'Thép + Composite',
+                'year' => 2024,
+                'desc' => 'Dòng máy phổ thông nổi tiếng của Shimano, nhẹ và mượt.',
+                'images' => [
+                    'https://images.unsplash.com/photo-1627662165246-04dcd6a693f5?auto=format&w=900',
+                ],
+                'variants' => [
+                    ['sku' => 'SIE25-BLK', 'price' => 890000, 'stock' => 20, 'color' => 'Đen', 'size' => '2500', 'image' => 'https://images.unsplash.com/photo-1627662165246-04dcd6a693f5?auto=format&w=800'],
+                    ['sku' => 'SIE30-RED', 'price' => 920000, 'stock' => 15, 'color' => 'Đỏ', 'size' => '3000', 'image' => 'https://images.unsplash.com/photo-1627662165000-9c6e76e0cb5f?auto=format&w=800'],
+                ]
             ],
+
+            // 🧵 DÂY CÂU
             [
-                'category_id' => 3,
-                'name' => 'Bộ lưỡi câu inox 10 chiếc',
-                'description' => 'Lưỡi câu chống gỉ sét, sắc bén, phù hợp nhiều loại mồi khác nhau.',
-                'price' => 60000,
-                'stock' => 100,
-                'image' => 'https://images.unsplash.com/photo-1607604276583-99d87e73cc8a?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'category' => 'day-cau',
+                'name' => 'Dây câu fluorocarbon Daiwa 150m',
+                'brand' => 'Daiwa',
+                'origin' => 'Thái Lan',
+                'warranty' => '6 tháng',
+                'material' => 'Fluorocarbon',
+                'year' => 2023,
+                'desc' => 'Dây chống mài mòn, bền và trơn, thích hợp câu cá biển.',
+                'images' => [
+                    'https://images.unsplash.com/photo-1526746329403-8a04f2f2dba6?auto=format&w=900',
+                ],
+                'variants' => [
+                    ['sku' => 'FC100-GRN', 'price' => 95000, 'stock' => 40, 'color' => 'Xanh lá', 'size' => '100m', 'image' => 'https://images.unsplash.com/photo-1526746329403-8a04f2f2dba6?auto=format&w=800'],
+                    ['sku' => 'FC150-CLR', 'price' => 120000, 'stock' => 30, 'color' => 'Trong suốt', 'size' => '150m', 'image' => 'https://images.unsplash.com/photo-1579208570378-8c970854bc23?auto=format&w=800'],
+                ]
             ],
+
+            // 🪝 MỒI & LƯỠI
             [
-                'category_id' => 4,
-                'name' => 'Hộp đựng đồ câu chuyên dụng',
-                'description' => 'Hộp đựng chống nước, nhiều ngăn, có tay cầm tiện lợi.',
-                'price' => 230000,
-                'stock' => 30,
-                'image' => 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'category' => 'moi-luoi',
+                'name' => 'Lưỡi câu inox King Hook 20 chiếc',
+                'brand' => 'King Hook',
+                'origin' => 'Trung Quốc',
+                'warranty' => '3 tháng',
+                'material' => 'Inox 304',
+                'year' => 2024,
+                'desc' => 'Lưỡi câu sắc bén, chống gỉ, độ bền cao.',
+                'images' => [
+                    'https://images.unsplash.com/photo-1607604276583-99d87e73cc8a?auto=format&w=900',
+                ],
+                'variants' => [
+                    ['sku' => 'HOOKM', 'price' => 70000, 'stock' => 60, 'color' => 'Bạc', 'size' => 'M', 'image' => 'https://images.unsplash.com/photo-1607604276583-99d87e73cc8a?auto=format&w=800'],
+                    ['sku' => 'HOOKL', 'price' => 85000, 'stock' => 40, 'color' => 'Bạc', 'size' => 'L', 'image' => 'https://via.placeholder.com/600x400?text=Hook+size+L'],
+                ]
             ],
+
+            // 🎒 PHỤ KIỆN
             [
-                'category_id' => 5,
-                'name' => 'Áo chống nắng đi câu cá',
-                'description' => 'Vải co giãn 4 chiều, thoáng mát, chống tia UV hiệu quả.',
-                'price' => 190000,
-                'stock' => 25,
-                'image' => 'https://images.unsplash.com/photo-1598970434795-0c54fe7c0649?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'category' => 'phu-kien',
+                'name' => 'Hộp đồ câu Rapala ProBox',
+                'brand' => 'Rapala',
+                'origin' => 'Việt Nam',
+                'warranty' => '12 tháng',
+                'material' => 'Nhựa ABS',
+                'year' => 2024,
+                'desc' => 'Hộp đa năng 15 ngăn, chống nước, chống sốc.',
+                'images' => [
+                    'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&w=900',
+                ],
+                'variants' => [
+                    ['sku' => 'PROBOX-S', 'price' => 230000, 'stock' => 30, 'color' => 'Xanh lá', 'size' => 'Nhỏ', 'image' => 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&w=800'],
+                    ['sku' => 'PROBOX-L', 'price' => 270000, 'stock' => 20, 'color' => 'Cam', 'size' => 'Lớn', 'image' => 'https://via.placeholder.com/600x400?text=ProBox+Large'],
+                ]
             ],
-            [
-                'category_id' => 4,
-                'name' => 'Mồi giả mềm cho cá lóc',
-                'description' => 'Mồi giả hình cá nhỏ, mềm và linh hoạt, thu hút cá lớn.',
-                'price' => 50000,
-                'stock' => 80,
-                'image' => 'https://shopcancau.vn/uploads/source/Luoi%20moi%20phao/moi%20gia/TNT/F35C/nhai-hoi-tnt-f35c-1.jpg',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'category_id' => 5,
-                'name' => 'Túi đựng cần câu gấp gọn',
-                'description' => 'Chất liệu vải dày, chống thấm, có dây đeo vai tiện dụng.',
-                'price' => 160000,
-                'stock' => 35,
-                'image' => 'https://images.unsplash.com/photo-1560083750-039de7ab0b5d?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'category_id' => 5,
-                'name' => 'Ghế gấp câu cá mini',
-                'description' => 'Ghế gấp gọn nhẹ, khung thép không gỉ, tiện mang đi xa.',
-                'price' => 220000,
-                'stock' => 40,
-                'image' => 'https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'category_id' => 5,
-                'name' => 'Đèn pin đội đầu siêu sáng',
-                'description' => 'Đèn pin LED công suất cao, 3 chế độ sáng, pin sạc lâu dài.',
-                'price' => 120000,
-                'stock' => 60,
-                'image' => 'https://images.unsplash.com/photo-1567443024551-f3e8a1e2cd39?auto=format&fit=crop&w=800&q=80',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ]);
+        ];
+
+        foreach ($data as $p) {
+            $pid = DB::table('products')->insertGetId([
+                'category_id' => $catId($p['category']),
+                'name' => $p['name'],
+                'description' => $p['desc'],
+                'brand' => $p['brand'],
+                'origin' => $p['origin'],
+                'warranty' => $p['warranty'],
+                'material' => $p['material'],
+                'year' => $p['year'],
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+
+            foreach ($p['variants'] as $v) {
+                DB::table('product_variants')->insert([
+                    'product_id' => $pid,
+                    'sku' => $v['sku'],
+                    'price' => $v['price'],
+                    'stock' => $v['stock'],
+                    'color' => $v['color'] ?? null,
+                    'size' => $v['size'] ?? null,
+                    'image' => $v['image'] ?? null,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+
+            foreach ($p['images'] as $i => $url) {
+                DB::table('product_images')->insert([
+                    'product_id' => $pid,
+                    'image_url' => $url,
+                    'is_thumbnail' => $i === 0,
+                    'sort_order' => $i + 1,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        }
     }
 }

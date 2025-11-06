@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -23,5 +24,10 @@ Route::get('/tintuc', function () {
 Route::get('/khuyenmai', function () {
     return view('khuyenmai');
 });
-Route::get('/market/filter', [ProductController::class, 'filter'])->name('market.filter');
 
+Route::get('/market/filter', [ProductController::class, 'filter'])->name('market.filter');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::get('/cart/remove/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');

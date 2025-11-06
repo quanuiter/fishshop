@@ -33,4 +33,27 @@ class Product extends Model
     {
         return $this->stock > 0;
     }
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+    public function getTotalStock()
+    {
+        return $this->variants->sum('stock');
+    }
+    public function getMinPrice()
+    {
+        // Nếu variants đã load sẵn (Eager Loaded)
+        if ($this->relationLoaded('variants')) {
+            return $this->variants->min('price') ?? 0;
+        }
+
+        // Nếu chưa load thì query trực tiếp từ DB
+        return $this->variants()->min('price') ?? 0;
+    }
 }

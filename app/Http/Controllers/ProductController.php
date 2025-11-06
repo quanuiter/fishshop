@@ -7,70 +7,36 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    /** 🧱 Danh sách sản phẩm (market) */
     public function index()
     {
-        // Lấy danh sách sản phẩm (demo)
-        $products = Product::all(); // hoặc mảng mẫu nếu chưa có DB
+        // Load sản phẩm kèm variants + images + category
+        $products = Product::with(['variants', 'images', 'category'])->get();
         return view('market.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    /** 🧩 Chi tiết sản phẩm */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('market.show', compact('product'));
+        $product = Product::with(['variants', 'images', 'category'])->findOrFail($id);
+
+        // Sản phẩm liên quan cùng category
+        $related_products = Product::with(['variants', 'images'])
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->take(4)
+            ->get();
+
+        return view('market.show', compact('product', 'related_products'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        //
-    }
+    /** 🧮 Lọc + Sắp xếp (AJAX) */
     public function filter(Request $request)
     {
-        $query = Product::query();
+        $query = Product::with(['variants', 'images', 'category']);
 
         // Lọc theo category
-        if ($request->category && $request->category != 'all') {
+        if ($request->category && $request->category !== 'all') {
             $query->where('category_id', $request->category);
         }
 
@@ -80,24 +46,27 @@ class ProductController extends Controller
         }
 
         // Sắp xếp
-        switch ($request->sort) {
-            case 'price_asc':
-                $query->orderBy('price', 'asc');
-                break;
-            case 'price_desc':
-                $query->orderBy('price', 'desc');
-                break;
-            case 'name_asc':
-                $query->orderBy('name', 'asc');
-                break;
-            case 'name_desc':
-                $query->orderBy('name', 'desc');
-                break;
+        if ($request->sort) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    // Sắp theo giá biến thể thấp nhất
+                    $query->withMin('variants', 'price')->orderBy('variants_min_price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->withMin('variants', 'price')->orderBy('variants_min_price', 'desc');
+                    break;
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+            }
         }
 
         $products = $query->get();
 
-        // Trả về partial HTML (để ajax thay thế)
+        // Trả về partial HTML (cho AJAX)
         return view('market.partials.products', compact('products'))->render();
     }
 }

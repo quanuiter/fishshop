@@ -1,3 +1,7 @@
+@php
+  $cart = session('cart', []);
+  $cartCount = collect($cart)->sum('quantity');
+@endphp
 <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
   <div class="container-lg">
     <!-- Logo với design hiện đại hơn -->
@@ -7,7 +11,8 @@
     </a>
 
     <!-- Mobile toggle button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarFishShop" aria-controls="navbarFishShop" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarFishShop"
+      aria-controls="navbarFishShop" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -28,14 +33,17 @@
 
         <!-- Dropdown menu với style mới -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
             <span class="nav-text">Tin tức</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Bài viết mới</a></li>
             <li><a class="dropdown-item" href="/tintuc">Tin tức</a></li>
             <li><a class="dropdown-item" href="/khuyenmai">Khuyến mãi</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item" href="#">Xem tất cả</a></li>
           </ul>
         </li>
@@ -46,15 +54,18 @@
           </a>
         </li>
       </ul>
-
+      <a href="{{ route('cart.index') }}" class="cart-icon-link"
+        style="position: relative; display: inline-block; text-decoration: none; margin-left: 12px;">
+        <span style="font-size: 22px;">🛒</span>
+        @if($cartCount > 0)
+          <span class="cart-badge">{{ $cartCount }}</span>
+        @endif
+      </a>
       <!-- Auth buttons với design phù hợp theme -->
       <div class="auth-buttons ms-lg-3">
         @guest
           <a href="{{ route('login') }}" class="btn btn-outline-nav btn-sm me-2">
             Đăng nhập
-          </a>
-          <a href="{{ route('register') }}" class="btn btn-nav btn-sm">
-            Đăng ký
           </a>
         @else
           <div class="user-menu">
@@ -270,5 +281,28 @@
 
   .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  .cart-icon-link {
+    color: #1a472a;
+    transition: 0.2s;
+  }
+
+  .cart-icon-link:hover {
+    transform: scale(1.1);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #e8b923;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    padding: 2px 6px;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 </style>

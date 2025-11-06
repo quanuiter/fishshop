@@ -6,7 +6,7 @@
         <div class="product-info">
             <h3 class="product-name">{{ $product->name }}</h3>
             <div class="product-price">
-                <span class="currency">₫</span> {{ number_format($product->price, 0, ',', '.') }}
+                <span class="currency">₫</span> {{ number_format($product->getMinPrice(), 0, ',', '.') }}
             </div>
         </div>
     </div>
