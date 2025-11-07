@@ -8,16 +8,31 @@
     <style>
         body { padding-top: 70px; }
     </style>
-    @vite(["resources/sass/app.scss","resources/js/app.js"]) {{-- nếu dự án đã cấu hình Vite */}
 </head>
 <body>
     @include('layouts.header')
 
     <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <h1 class="h4">Bảng điều khiển Admin</h1>
-                <p class="mb-0">Chào mừng bạn đến khu vực quản trị.</p>
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h4">Bảng điều khiển Admin</h1>
+                        <p class="mb-0">Chào mừng bạn đến khu vực quản trị.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Danh mục</h5>
+                        <p class="card-text text-muted">Tạo, sửa, xoá các danh mục sản phẩm.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{{ route('admin.categories.index') }}" class="btn btn-success">Quản lý danh mục</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -25,4 +40,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
