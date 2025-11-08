@@ -3,6 +3,7 @@
 @section('title', 'FishShop Market')
 
 @section('content')
+<x-breadcrumb />
   <style>
     body {
       background-color: #f8faf8;

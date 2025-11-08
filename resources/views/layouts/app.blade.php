@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     body {
-      background-color: #fff;
+      background-color: #f5f7f6;
       color: white;
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -20,7 +20,7 @@
 
   @include('layouts.header')
 
-  <main>
+  <main style="background: transparent;">
     @yield('content')
   </main>
 

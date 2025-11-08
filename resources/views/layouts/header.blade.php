@@ -6,7 +6,7 @@
   <div class="container-lg">
     <!-- Logo với design hiện đại hơn -->
     <a class="navbar-brand" href="/">
-      <span class="brand-icon">🎣</span>
+      <span class="brand-icon"></span>
       <span class="brand-text">FishShop</span>
     </a>
 
@@ -68,17 +68,29 @@
             Đăng nhập
           </a>
         @else
-          <div class="user-menu">
-            <span class="user-greeting">Xin chào, {{ Auth::user()->name }}</span>
-            @if (Auth::user()->is_admin ?? false)
-              <a href="{{ url('/admin') }}" class="btn btn-outline-nav btn-sm ms-2">Quản trị</a>
-            @endif
-            <form method="POST" action="{{ route('logout') }}" class="d-inline">
-              @csrf
-              <button type="submit" class="btn btn-nav-logout btn-sm ms-2">
-                Đăng xuất
-              </button>
-            </form>
+          <div class="dropdown user-dropdown">
+            <a class="user-greeting dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              {{ Auth::user()->name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+              <li><a class="dropdown-item" href="{{ route('orders.index') }}">Đơn hàng của tôi</a></li>
+
+
+              @if (Auth::user()->is_admin ?? false)
+                <li><a class="dropdown-item" href="{{ url('/admin') }}">Trang quản trị</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+              @endif
+
+              <li>
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <button type="submit" class="dropdown-item text-danger">Đăng xuất</button>
+                </form>
+              </li>
+            </ul>
           </div>
         @endguest
       </div>
@@ -304,5 +316,41 @@
     padding: 2px 6px;
     line-height: 1;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .user-dropdown {
+    position: relative;
+  }
+
+  .user-greeting {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .user-dropdown-menu {
+    background: #0d5a35;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+  }
+
+  .user-dropdown-menu .dropdown-item {
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .user-dropdown-menu .dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .user-dropdown-menu .dropdown-item.text-danger:hover {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ffaaaa;
   }
 </style>

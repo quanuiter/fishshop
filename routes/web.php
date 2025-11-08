@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -40,4 +41,11 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     })->name('dashboard');
 
     Route::resource('categories', CategoryController::class)->except(['show']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
+    Route::get('/orders', [OrderController::class, 'myOrders'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });

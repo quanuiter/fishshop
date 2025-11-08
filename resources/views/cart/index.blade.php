@@ -3,6 +3,7 @@
 @section('title', 'Giỏ hàng')
 
 @section('content')
+<x-breadcrumb />
 <div style="max-width: 1200px; margin: 0 auto; padding: 48px 24px; background: #ffffff;">
   <!-- Updated header with better typography and spacing -->
   <div style="margin-bottom: 48px;">
@@ -76,7 +77,7 @@
 
           <!-- Actions -->
           <div style="display: flex; flex-direction: column; gap: 12px;">
-            <a href="#" style="display: block; padding: 12px 16px; background: #1a472a; color: #fff; text-align: center; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s ease;">Thanh toán</a>
+            <a href="{{ route('checkout.index') }}" style="display: block; padding: 12px 16px; background: #1a472a; color: #fff; text-align: center; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s ease;">Thanh toán</a>
             <a href="/market" style="display: block; padding: 12px 16px; background: #f0f0f0; color: #1a1a1a; text-align: center; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s ease;">Tiếp tục mua sắm</a>
             <a href="{{ route('cart.clear') }}" style="display: block; padding: 12px 16px; background: transparent; color: #d32f2f; text-align: center; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid #d32f2f; transition: all 0.2s ease;">Xóa toàn bộ</a>
           </div>

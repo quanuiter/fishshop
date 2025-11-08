@@ -3,6 +3,7 @@
 @section('title', 'Chính sách mua hàng - FishShop')
 
 @section('content')
+<x-breadcrumb />
 <div class="container py-5">
     <h1 class="text-center mb-4 text-success fw-bold">🎣 Chính Sách Mua Hàng - FishShop</h1>
 

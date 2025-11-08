@@ -3,6 +3,7 @@
 @section('title', $product->name ?? 'Chi tiết sản phẩm')
 
 @section('content')
+<x-breadcrumb />
   <style>
     /* Complete design overhaul: improved spacing, typography hierarchy, and visual harmony */
     :root {
@@ -218,8 +219,8 @@
       position: absolute;
       top: -50%;
       right: -50%;
-      width: 200px;
-      height: 200px;
+      width: 150px;
+      height: 150px;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 50%;
     }
@@ -250,8 +251,8 @@
 
     /* Specifications Grid */
     .product-specs {
-      margin-bottom: 32px;
-      padding: 20px 24px;
+      margin-bottom: 20px;
+      padding: 10px 12px;
       background: var(--neutral-light);
       border-radius: 12px;
       display: grid;
@@ -262,7 +263,7 @@
     .spec-item {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 3px;
     }
 
     .spec-label {
@@ -715,15 +716,6 @@
   </style>
 
   <div class="container">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-      <a href="/">Trang chủ</a>
-      <span>/</span>
-      <a href="/market">Cửa hàng</a>
-      <span>/</span>
-      <span>{{ $product->name }}</span>
-    </div>
-
     <!-- Product Detail Container -->
     <div class="product-detail-container">
       <!-- Gallery Section -->

@@ -3,6 +3,7 @@
 @section('title', 'Trang chủ - FishShop')
 
 @section('content')
+<x-breadcrumb />
 <style>
   .hero-slider {
     position: relative;
