@@ -58,6 +58,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Thống kê doanh thu</h5>
+                        <p class="card-text text-muted">Xem doanh thu theo ngày/tháng và trạng thái.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{{ route('admin.reports.revenue') }}" class="btn btn-success">Xem báo cáo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
