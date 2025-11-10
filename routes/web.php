@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
@@ -41,6 +43,10 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     })->name('dashboard');
 
     Route::resource('categories', CategoryController::class)->except(['show']);
+    Route::resource('products', AdminProductController::class)->except(['show']);
+    Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::post('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
+    Route::get('orders/{order}/items', [AdminOrderController::class, 'items'])->name('orders.items');
 });
 
 Route::middleware('auth')->group(function () {

@@ -34,6 +34,30 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Sản phẩm</h5>
+                        <p class="card-text text-muted">Quản lý sản phẩm, chỉnh sửa thông tin cơ bản.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{{ route('admin.products.index') }}" class="btn btn-success">Quản lý sản phẩm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Đơn hàng</h5>
+                        <p class="card-text text-muted">Xác nhận hoặc huỷ đơn hàng.</p>
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" class="btn btn-success">Quản lý đơn hàng</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -54,6 +54,7 @@
           </a>
         </li>
       </ul>
+      @if (! (Auth::user()->is_admin ?? false))
       <a href="{{ route('cart.index') }}" class="cart-icon-link"
         style="position: relative; display: inline-block; text-decoration: none; margin-left: 12px;">
         <span style="font-size: 22px;">🛒</span>
@@ -61,6 +62,7 @@
           <span class="cart-badge">{{ $cartCount }}</span>
         @endif
       </a>
+      @endif
       <!-- Auth buttons với design phù hợp theme -->
       <div class="auth-buttons ms-lg-3">
         @guest
@@ -74,8 +76,9 @@
               {{ Auth::user()->name }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+              @if (! (Auth::user()->is_admin ?? false))
               <li><a class="dropdown-item" href="{{ route('orders.index') }}">Đơn hàng của tôi</a></li>
-
+              @endif
 
               @if (Auth::user()->is_admin ?? false)
                 <li><a class="dropdown-item" href="{{ url('/admin') }}">Trang quản trị</a></li>
