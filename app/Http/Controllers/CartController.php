@@ -68,16 +68,23 @@ class CartController extends Controller
 
     public function update(Request $request)
     {
-        $cart = session()->get('cart', []);
-        $variantId = $request->variant_id;
-        $quantity = $request->quantity;
+        $variantId = $request->input('variant_id');
+        $quantity = (int) $request->input('quantity');
 
-        if (isset($cart[$variantId])) {
-            $cart[$variantId]['quantity'] = $quantity;
-            session()->put('cart', $cart);
+        $cart = session()->get('cart', []);
+
+        if (!isset($cart[$variantId])) {
+            return response()->json(['success' => false, 'message' => 'Không tìm thấy sản phẩm trong giỏ hàng!']);
         }
 
-        return response()->json(['status' => 'updated']);
+        if ($quantity <= 0) {
+            unset($cart[$variantId]);
+        } else {
+            $cart[$variantId]['quantity'] = $quantity;
+        }
+
+        session()->put('cart', $cart);
+        return response()->json(['success' => true, 'message' => 'Cập nhật thành công!']);
     }
 
     public function clear()

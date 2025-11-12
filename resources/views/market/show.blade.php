@@ -3,22 +3,24 @@
 @section('title', $product->name ?? 'Chi tiết sản phẩm')
 
 @section('content')
-<x-breadcrumb />
+  <x-breadcrumb />
   <style>
-    /* Complete design overhaul: improved spacing, typography hierarchy, and visual harmony */
+    /* Improved CSS organization and animation system */
     :root {
       --primary: #1a472a;
       --primary-light: #2d5f3f;
       --accent: #e8b923;
       --accent-light: #ffd966;
-      --neutral-light: #f5f3f0;
+      --neutral-light: #faf8f6;
       --neutral-gray: #6b6b6b;
-      --neutral-dark: #333333;
-      --border-color: #e0d9d2;
+      --neutral-dark: #2c2c2c;
+      --border-color: #e5ddd5;
       --bg-light: #ffffff;
       --success: #27ae60;
-      --shadow-sm: 0 1px 3px rgba(26, 71, 42, 0.08);
-      --shadow-md: 0 4px 12px rgba(26, 71, 42, 0.12);
+      --shadow-sm: 0 2px 8px rgba(26, 71, 42, 0.06);
+      --shadow-md: 0 8px 24px rgba(26, 71, 42, 0.1);
+      --shadow-lg: 0 12px 32px rgba(26, 71, 42, 0.12);
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -35,77 +37,166 @@
     }
 
     .container {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
+    /* Enhanced animations for smooth transitions */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     /* Breadcrumb - Refined */
     .breadcrumb {
-      padding: 20px 0;
+      padding: 24px 0;
       font-size: 13px;
       color: var(--neutral-gray);
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       display: flex;
       align-items: center;
       gap: 6px;
+      animation: slideIn 0.5s var(--transition);
     }
 
     .breadcrumb a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s ease;
+      transition: color 0.25s ease;
     }
 
     .breadcrumb a:hover {
       color: var(--accent);
     }
 
-    /* Main Product Container */
+    /* Balanced grid layout for better visual harmony */
     .product-detail-container {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 48px;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
       margin-bottom: 64px;
       background: var(--bg-light);
-      padding: 48px;
+      padding: 56px;
       border-radius: 16px;
       box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.6s var(--transition);
     }
 
-    /* Gallery Section - Enhanced */
+    /* Gallery section with improved image handling */
     .gallery-section {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      position: relative;
     }
 
     .main-image {
+      position: relative;
       width: 100%;
       aspect-ratio: 1;
-      background: linear-gradient(135deg, var(--neutral-light) 0%, rgba(232, 185, 35, 0.05) 100%);
+      background: linear-gradient(135deg, var(--neutral-light) 0%, rgba(232, 185, 35, 0.03) 100%);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid var(--border-color);
-      transition: border-color 0.3s ease;
+      cursor: crosshair;
+      transition: all 0.3s ease;
+    }
+
+    .main-image:hover {
+      border-color: var(--accent-light);
+      box-shadow: var(--shadow-sm);
     }
 
     .main-image img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      padding: 24px;
+      padding: 16px;
+      display: block;
     }
 
+    .img-lens {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      background: rgba(232, 185, 35, 0.15);
+      display: none;
+      pointer-events: none;
+      z-index: 100;
+      backdrop-filter: blur(2px);
+    }
+
+    .zoom-result {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 500px;
+      height: 500px;
+      border: 2px solid var(--accent);
+      overflow: hidden;
+      display: none;
+      background-color: #fff;
+      box-shadow: var(--shadow-lg);
+      border-radius: 12px;
+      z-index: 9999;
+    }
+
+    .zoom-result img {
+      position: absolute;
+      max-width: none;
+    }
+
+    @media (max-width: 1400px) {
+      .zoom-result {
+        width: 400px;
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .zoom-result {
+        display: none !important;
+      }
+
+      .main-image {
+        cursor: zoom-in;
+      }
+    }
+
+    /* Thumbnail gallery */
     .thumbnail-gallery {
       display: flex;
       gap: 12px;
       overflow-x: auto;
       padding: 2px;
+      animation: slideIn 0.6s var(--transition) 0.1s backwards;
     }
 
     .thumbnail-gallery::-webkit-scrollbar {
@@ -123,13 +214,13 @@
     }
 
     .thumbnail {
-      width: 90px;
-      height: 90px;
+      width: 100px;
+      height: 100px;
       flex-shrink: 0;
       border: 2px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--transition);
       overflow: hidden;
       background: white;
     }
@@ -144,11 +235,13 @@
     .thumbnail:hover {
       border-color: var(--accent-light);
       box-shadow: var(--shadow-sm);
+      transform: translateY(-4px);
     }
 
     .thumbnail.active {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(232, 185, 35, 0.15);
+      box-shadow: 0 0 0 4px rgba(232, 185, 35, 0.15);
+      background: rgba(232, 185, 35, 0.05);
     }
 
     /* Product Info Section */
@@ -156,26 +249,28 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      animation: fadeInUp 0.6s var(--transition) 0.15s backwards;
     }
 
-    /* Header */
+    /* Product Header */
     .product-header {
-      margin-bottom: 28px;
+      margin-bottom: 32px;
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 24px;
+      padding-bottom: 28px;
     }
 
     .product-brand {
       font-size: 12px;
       color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      font-weight: 600;
-      margin-bottom: 8px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      opacity: 0.9;
     }
 
     .product-name {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 16px;
@@ -190,7 +285,7 @@
 
     .stars {
       display: flex;
-      gap: 2px;
+      gap: 3px;
     }
 
     .star {
@@ -204,25 +299,21 @@
       font-weight: 500;
     }
 
-    /* Price Section - Premium */
+    /* Simplified price section with subtle gradient */
     .price-section {
       margin-bottom: 32px;
-      padding: 24px;
-      background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+      padding: 28px;
+      background: linear-gradient(135deg, rgba(232, 185, 35, 0.08) 0%, rgba(232, 185, 35, 0.03) 100%);
+      border: 1px solid rgba(232, 185, 35, 0.2);
       border-radius: 12px;
       position: relative;
       overflow: hidden;
+      transition: all var(--transition);
     }
 
-    .price-section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 150px;
-      height: 150px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
+    .price-section:hover {
+      background: linear-gradient(135deg, rgba(232, 185, 35, 0.12) 0%, rgba(232, 185, 35, 0.05) 100%);
+      box-shadow: var(--shadow-sm);
     }
 
     .price-row {
@@ -230,14 +321,13 @@
       align-items: center;
       gap: 16px;
       margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
     }
 
     .current-price {
       font-size: 36px;
       font-weight: 800;
-      color: var(--primary);
+      color: var(--accent);
+      transition: all 0.3s ease;
     }
 
     .stock-status {
@@ -251,47 +341,50 @@
 
     /* Specifications Grid */
     .product-specs {
-      margin-bottom: 20px;
-      padding: 10px 12px;
-      background: var(--neutral-light);
+      margin-bottom: 28px;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--neutral-light) 0%, rgba(232, 185, 35, 0.02) 100%);
       border-radius: 12px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 24px;
+      border: 1px solid rgba(232, 185, 35, 0.1);
     }
 
     .spec-item {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 6px;
     }
 
     .spec-label {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--primary);
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     .spec-value {
       color: var(--neutral-gray);
       font-size: 14px;
+      font-weight: 500;
     }
 
     /* Variants Section */
     .variants-section {
       margin-bottom: 28px;
+      animation: fadeInUp 0.6s var(--transition);
     }
 
     .variant-label {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--primary);
       margin-bottom: 12px;
       display: block;
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     .variant-options {
@@ -301,20 +394,21 @@
     }
 
     .variant-btn {
-      padding: 10px 18px;
+      padding: 11px 18px;
       border: 2px solid var(--border-color);
       border-radius: 8px;
       background: white;
       color: var(--neutral-dark);
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--transition);
       font-size: 13px;
     }
 
     .variant-btn:hover {
       border-color: var(--accent);
-      background: rgba(232, 185, 35, 0.05);
+      background: rgba(232, 185, 35, 0.06);
+      transform: translateY(-2px);
     }
 
     .variant-btn.active {
@@ -322,22 +416,24 @@
       background: var(--accent);
       color: var(--primary);
       font-weight: 600;
+      box-shadow: 0 4px 12px rgba(232, 185, 35, 0.2);
     }
 
     /* Quantity & Wishlist */
     .quantity-section {
-      margin-bottom: 28px;
+      margin-bottom: 32px;
       display: flex;
       align-items: center;
       gap: 16px;
+      animation: fadeInUp 0.6s var(--transition);
     }
 
     .quantity-label {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--primary);
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       white-space: nowrap;
     }
 
@@ -348,6 +444,12 @@
       border-radius: 8px;
       overflow: hidden;
       background: white;
+      transition: all 0.25s ease;
+    }
+
+    .quantity-control:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(232, 185, 35, 0.1);
     }
 
     .qty-btn {
@@ -381,48 +483,42 @@
       outline: none;
     }
 
-    .wishlist-btn {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--border-color);
-      background: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 20px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .wishlist-btn:hover {
-      border-color: var(--accent);
-      background: rgba(232, 185, 35, 0.05);
-    }
-
-    .wishlist-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
     /* Action Buttons */
     .action-buttons {
       display: flex;
       gap: 12px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s var(--transition) 0.2s backwards;
     }
 
     .btn {
       flex: 1;
-      padding: 14px 20px;
+      padding: 16px 20px;
       border: none;
       border-radius: 8px;
       font-weight: 600;
       font-size: 15px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all var(--transition);
       text-decoration: none;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      transition: left 0.3s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
     }
 
     .btn-add-cart {
@@ -432,8 +528,8 @@
 
     .btn-add-cart:hover {
       background: var(--accent-light);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(232, 185, 35, 0.25);
     }
 
     .btn-buy-now {
@@ -443,16 +539,16 @@
 
     .btn-buy-now:hover {
       background: var(--primary-light);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(26, 71, 42, 0.25);
     }
 
     /* Features */
     .features-section {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      padding: 20px 0;
+      gap: 24px;
+      padding: 24px 0;
       border-top: 1px solid var(--border-color);
       border-bottom: 1px solid var(--border-color);
     }
@@ -460,11 +556,22 @@
     .feature-item {
       text-align: center;
       padding: 16px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .feature-item:hover {
+      background: var(--neutral-light);
     }
 
     .feature-icon {
       font-size: 28px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-item:hover .feature-icon {
+      transform: scale(1.1);
     }
 
     .feature-text {
@@ -476,10 +583,11 @@
     /* Tabs Section */
     .tabs-section {
       background: var(--bg-light);
-      padding: 40px 48px;
+      padding: 48px 56px;
       border-radius: 16px;
       margin-bottom: 64px;
       box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.6s var(--transition) 0.3s backwards;
     }
 
     .tabs-container {
@@ -490,17 +598,17 @@
     }
 
     .tab-btn {
-      padding: 14px 24px;
+      padding: 14px 28px;
       border: none;
       background: none;
       color: var(--neutral-gray);
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       border-bottom: 3px solid transparent;
-      transition: all 0.3s ease;
-      font-size: 14px;
+      transition: all var(--transition);
+      font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       margin-bottom: -2px;
     }
 
@@ -515,21 +623,11 @@
 
     .tab-content {
       display: none;
+      animation: fadeInUp 0.4s var(--transition);
     }
 
     .tab-content.active {
       display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
     }
 
     .description-content {
@@ -542,7 +640,7 @@
     .specs-content {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+      gap: 32px;
     }
 
     .specs-item {
@@ -553,10 +651,10 @@
 
     .specs-item strong {
       color: var(--primary);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     .specs-item div {
@@ -573,12 +671,13 @@
       font-size: 24px;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.6s var(--transition);
     }
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 24px;
     }
 
@@ -586,14 +685,15 @@
       border: 1px solid var(--border-color);
       border-radius: 12px;
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: all var(--transition);
       background: white;
+      animation: fadeInUp 0.6s var(--transition);
     }
 
     .product-card:hover {
       box-shadow: var(--shadow-md);
       border-color: var(--accent-light);
-      transform: translateY(-4px);
+      transform: translateY(-6px);
     }
 
     .product-card-image {
@@ -611,16 +711,21 @@
       height: 100%;
       object-fit: contain;
       padding: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-card-image img {
+      transform: scale(1.05);
     }
 
     .product-card-info {
-      padding: 16px;
+      padding: 18px;
     }
 
     .product-card-name {
       font-weight: 600;
       color: var(--primary);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-size: 14px;
       line-height: 1.4;
     }
@@ -650,8 +755,15 @@
     @media (max-width: 1024px) {
       .product-detail-container {
         grid-template-columns: 1fr;
-        gap: 32px;
-        padding: 32px;
+        gap: 40px;
+        padding: 40px;
+      }
+
+      .zoom-result {
+        position: absolute;
+        left: calc(100% + 16px);
+        width: 350px;
+        height: 350px;
       }
 
       .product-specs {
@@ -661,6 +773,10 @@
       .specs-content {
         grid-template-columns: 1fr;
       }
+
+      .features-section {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 768px) {
@@ -669,12 +785,12 @@
       }
 
       .product-detail-container {
-        padding: 20px;
-        gap: 24px;
+        padding: 24px;
+        gap: 28px;
       }
 
       .product-name {
-        font-size: 24px;
+        font-size: 22px;
       }
 
       .current-price {
@@ -685,9 +801,18 @@
         aspect-ratio: 1;
       }
 
+      .thumbnail {
+        width: 80px;
+        height: 80px;
+      }
+
       .features-section {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 16px;
+      }
+
+      .zoom-result {
+        display: none !important;
       }
 
       .products-grid {
@@ -700,7 +825,7 @@
       }
 
       .tabs-section {
-        padding: 24px 16px;
+        padding: 28px 20px;
       }
 
       .tabs-container {
@@ -712,6 +837,10 @@
         white-space: nowrap;
         padding: 12px 16px;
       }
+
+      .specs-content {
+        gap: 16px;
+      }
     }
   </style>
 
@@ -722,20 +851,21 @@
       <div class="gallery-section">
         <div class="main-image">
           <img id="mainImage"
-            src="{{ $product->images->first()?->image_url ?? ($product->variants->first()?->image ?? 'https://via.placeholder.com/500x500?text=Hình+ảnh+sản+phẩm') }}"
+            src="{{ $product->images->first()?->image_url ?? ($product->variants->first()?->image ?? 'https://via.placeholder.com/500x500?text=Fishing+Gear') }}"
             alt="{{ $product->name }}">
         </div>
         @if($product->images->count())
           <div class="thumbnail-gallery">
             @foreach($product->images as $image)
-              <div class="thumbnail {{ $loop->first ? 'active' : '' }}" onclick="changeImage('{{ $image->image_url }}')">
+              <div class="thumbnail {{ $loop->first ? 'active' : '' }}"
+                onclick="changeImage('{{ $image->image_url }}', this)">
                 <img src="{{ $image->image_url }}" alt="{{ $product->name }}">
               </div>
             @endforeach
             @if($product->variants->count())
               @foreach($product->variants as $variant)
                 @if($variant->image)
-                  <div class="thumbnail" onclick="changeImage('{{ $variant->image }}')">
+                  <div class="thumbnail" onclick="changeImage('{{ $variant->image }}', this)">
                     <img src="{{ $variant->image }}" alt="{{ $variant->color ?? $product->name }}">
                   </div>
                 @endif
@@ -749,7 +879,7 @@
       <div class="product-info-section">
         <!-- Header -->
         <div class="product-header">
-          <div class="product-brand">{{ $product->brand ?? 'Sản phẩm' }}</div>
+          <div class="product-brand">{{ $product->brand ?? 'Premium Gear' }}</div>
           <h1 class="product-name">{{ $product->name }}</h1>
           <div class="rating-section">
             <div class="stars">
@@ -772,7 +902,6 @@
         </div>
 
         <!-- Product Specs -->
-        <!-- Changed to 2-column grid for better visual balance -->
         <div class="product-specs">
           @if($product->origin)
             <div class="spec-item">
@@ -891,125 +1020,278 @@
         </div>
       </div>
     </div>
-
-    <!-- Related Products -->
-    @if($related_products->count())
-      <div class="related-products">
-        <h2 class="section-title">Sản phẩm liên quan</h2>
-        <div class="products-grid">
-          @foreach($related_products as $related)
-            <div class="product-card">
-              <div class="product-card-image">
-                <img
-                  src="{{ $product->images->first()?->image_url ?? ($related->variants->first()?->image ?? 'https://via.placeholder.com/250x200?text=Sản+phẩm') }}"
-                  alt="{{ $related->name }}">
-              </div>
-              <div class="product-card-info">
-                <h3 class="product-card-name">{{ $related->name }}</h3>
-                <div class="product-card-price">₫{{ number_format($related->variants->min('price') ?? 0, 0, ',', '.') }}</div>
-                <a href="/products/{{ $related->id }}" class="product-card-link">Xem chi tiết →</a>
-              </div>
-            </div>
-          @endforeach
-        </div>
-      </div>
-    @endif
   </div>
 
+  </style>
+
+  <!-- JavaScript Fixes - Thay thế toàn bộ phần zoom script -->
   <script>
-    const variants = @json($product->variants);
-    function changeImage(src) {
-      document.getElementById('mainImage').src = src;
+    document.addEventListener("DOMContentLoaded", () => {
+      const mainImage = document.getElementById('mainImage');
+      if (!mainImage) return;
+
+      const mainImageContainer = mainImage.parentElement;
+
+      // Create lens element
+      const lens = document.createElement('div');
+      lens.classList.add('img-lens');
+      mainImageContainer.appendChild(lens);
+
+      // Create zoom result container
+      const zoomResult = document.createElement('div');
+      zoomResult.classList.add('zoom-result');
+      document.body.appendChild(zoomResult); // Append to body instead
+
+      const zoomImg = document.createElement('img');
+      zoomResult.appendChild(zoomImg);
+
+      // Update zoom image when main image changes
+      const observer = new MutationObserver(() => {
+        zoomImg.src = mainImage.src;
+        imageLoaded();
+      });
+      observer.observe(mainImage, { attributes: true, attributeFilter: ['src'] });
+
+      const ZOOM_LEVEL = 2.5;
+      let cx, cy;
+
+      function imageLoaded() {
+        // Wait for image to load to get natural dimensions
+        if (mainImage.complete) {
+          calculateZoom();
+        } else {
+          mainImage.onload = calculateZoom;
+        }
+      }
+
+      function calculateZoom() {
+        const containerRect = mainImageContainer.getBoundingClientRect();
+        const resultRect = zoomResult.getBoundingClientRect();
+
+        // Calculate zoom ratio
+        cx = resultRect.width / lens.offsetWidth;
+        cy = resultRect.height / lens.offsetHeight;
+
+        // Set zoomed image size
+        zoomImg.style.width = (containerRect.width * cx) + 'px';
+        zoomImg.style.height = (containerRect.height * cy) + 'px';
+      }
+
+      // Event listeners
+      mainImageContainer.addEventListener('mouseenter', () => {
+        lens.style.display = 'block';
+        zoomResult.style.display = 'block';
+        zoomImg.src = mainImage.src;
+        imageLoaded();
+      });
+
+      mainImageContainer.addEventListener('mouseleave', () => {
+        lens.style.display = 'none';
+        zoomResult.style.display = 'none';
+      });
+
+      mainImageContainer.addEventListener('mousemove', moveLens);
+
+      function moveLens(e) {
+        e.preventDefault();
+
+        const containerRect = mainImageContainer.getBoundingClientRect();
+
+        // Calculate cursor position
+        let x = e.clientX - containerRect.left;
+        let y = e.clientY - containerRect.top;
+
+        // Calculate lens position (centered on cursor)
+        let lensX = x - (lens.offsetWidth / 2);
+        let lensY = y - (lens.offsetHeight / 2);
+
+        // Prevent lens from going outside image
+        if (lensX > containerRect.width - lens.offsetWidth) {
+          lensX = containerRect.width - lens.offsetWidth;
+        }
+        if (lensX < 0) {
+          lensX = 0;
+        }
+        if (lensY > containerRect.height - lens.offsetHeight) {
+          lensY = containerRect.height - lens.offsetHeight;
+        }
+        if (lensY < 0) {
+          lensY = 0;
+        }
+
+        // Set lens position
+        lens.style.left = lensX + 'px';
+        lens.style.top = lensY + 'px';
+
+        // Display zoomed image
+        zoomImg.style.left = '-' + (lensX * cx) + 'px';
+        zoomImg.style.top = '-' + (lensY * cy) + 'px';
+      }
+
+      // Initialize
+      imageLoaded();
+    });
+
+    // Fix các function khác
+    const variants = @json($product->variants ?? []);
+
+    function changeImage(src, el) {
+      const mainImg = document.getElementById('mainImage');
+      if (mainImg) {
+        mainImg.src = src;
+      }
       document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-      event.target.closest('.thumbnail').classList.add('active');
+      if (el) el.classList.add('active');
     }
 
     function selectVariant(btn) {
-      const color = btn.dataset.color || document.querySelector('.variant-btn.active[data-color]')?.dataset.color;
-      const size = btn.dataset.size || document.querySelector('.variant-btn.active[data-size]')?.dataset.size;
+      const colorBtns = document.querySelectorAll('.variant-btn[data-color]');
+      const sizeBtns = document.querySelectorAll('.variant-btn[data-size]');
 
-      // cập nhật trạng thái nút
+      // Remove active from same type
       if (btn.dataset.color) {
-        document.querySelectorAll('.variant-btn[data-color]').forEach(b => b.classList.remove('active'));
+        colorBtns.forEach(b => b.classList.remove('active'));
       }
       if (btn.dataset.size) {
-        document.querySelectorAll('.variant-btn[data-size]').forEach(b => b.classList.remove('active'));
+        sizeBtns.forEach(b => b.classList.remove('active'));
       }
       btn.classList.add('active');
 
-      // tìm biến thể tương ứng
-      const variant = variants.find(v =>
-        (!color || v.color === color) &&
-        (!size || v.size === size)
-      );
+      // Get selected color and size
+      const selectedColor = document.querySelector('.variant-btn[data-color].active')?.dataset.color;
+      const selectedSize = document.querySelector('.variant-btn[data-size].active')?.dataset.size;
 
-      // cập nhật giá, tồn kho và ảnh
+      // Find matching variant
+      const variant = variants.find(v => {
+        const colorMatch = !selectedColor || !v.color || v.color === selectedColor;
+        const sizeMatch = !selectedSize || !v.size || v.size === selectedSize;
+        return colorMatch && sizeMatch;
+      });
+
       if (variant) {
-        document.querySelector('.current-price').innerText = '₫' + new Intl.NumberFormat('vi-VN').format(variant.price);
-        document.querySelector('.stock-status').innerText = `✓ Còn ${variant.stock} sản phẩm`;
+        // Update price
+        const priceEl = document.querySelector('.current-price');
+        if (priceEl) {
+          priceEl.innerText = '₫' + new Intl.NumberFormat('vi-VN').format(variant.price);
+        }
+
+        // Update stock
+        const stockEl = document.querySelector('.stock-status');
+        if (stockEl) {
+          stockEl.innerHTML = `✓ Còn ${variant.stock} sản phẩm`;
+        }
+
+        // Update image if available
         if (variant.image) {
-          document.getElementById('mainImage').src = variant.image;
+          const mainImg = document.getElementById('mainImage');
+          if (mainImg) {
+            mainImg.src = variant.image;
+          }
         }
       }
     }
 
     function increaseQty() {
-      const qty = document.getElementById('quantity');
-      qty.value = parseInt(qty.value) + 1;
+      const qtyInput = document.getElementById('quantity');
+      if (!qtyInput) return;
+
+      const currentVariant = getSelectedVariant();
+      const maxStock = currentVariant ? currentVariant.stock : 999;
+      const currentVal = parseInt(qtyInput.value) || 1;
+
+      if (currentVal < maxStock) {
+        qtyInput.value = currentVal + 1;
+      } else {
+        alert('Vượt quá số lượng tồn kho!');
+      }
     }
 
     function decreaseQty() {
-      const qty = document.getElementById('quantity');
-      if (parseInt(qty.value) > 1) qty.value = parseInt(qty.value) - 1;
+      const qtyInput = document.getElementById('quantity');
+      if (!qtyInput) return;
+
+      const currentVal = parseInt(qtyInput.value) || 1;
+      if (currentVal > 1) {
+        qtyInput.value = currentVal - 1;
+      }
     }
 
-    function toggleWishlist() {
-      const btn = document.getElementById('wishlistBtn');
-      btn.classList.toggle('active');
-      btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
-    }
-
-    function addToCart() {
-      const quantity = document.getElementById('quantity').value;
+    function getSelectedVariant() {
       const activeColor = document.querySelector('.variant-btn[data-color].active')?.dataset.color;
       const activeSize = document.querySelector('.variant-btn[data-size].active')?.dataset.size;
 
-      // Tìm đúng variant theo màu + size
-      let variantId = null;
-      @json($product->variants).forEach(v => {
-        if ((!activeColor || v.color === activeColor) && (!activeSize || v.size === activeSize)) {
-          variantId = v.id;
-        }
+      return variants.find(v => {
+        const colorMatch = !activeColor || !v.color || v.color === activeColor;
+        const sizeMatch = !activeSize || !v.size || v.size === activeSize;
+        return colorMatch && sizeMatch;
       });
+    }
 
-      if (!variantId) {
-        alert('Vui lòng chọn màu hoặc kích thước trước khi thêm vào giỏ!');
+    function addToCart() {
+      const quantity = parseInt(document.getElementById('quantity')?.value) || 1;
+      const currentVariant = getSelectedVariant();
+
+      if (!currentVariant) {
+        alert('Vui lòng chọn phiên bản sản phẩm!');
         return;
       }
 
-      fetch('{{ route("cart.add") }}', {
+      if (quantity > currentVariant.stock) {
+        alert('Số lượng vượt quá tồn kho!');
+        return;
+      }
+
+      fetch('/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
         },
-        body: JSON.stringify({ variant_id: variantId, quantity: quantity })
+        body: JSON.stringify({
+          variant_id: currentVariant.id,
+          quantity: quantity
+        })
       })
         .then(res => res.json())
         .then(data => {
-          alert(data.message);
+          if (data.success) {
+            alert('Đã thêm vào giỏ hàng!');
+          } else {
+            alert(data.message || 'Có lỗi xảy ra!');
+          }
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          alert('Có lỗi xảy ra khi thêm vào giỏ hàng!');
         });
     }
 
     function buyNow() {
-      alert('Tiến hành thanh toán...');
+      const currentVariant = getSelectedVariant();
+      if (!currentVariant) {
+        alert('Vui lòng chọn phiên bản sản phẩm!');
+        return;
+      }
+
+      // Add to cart then redirect to checkout
+      addToCart();
+      setTimeout(() => {
+        window.location.href = '/checkout';
+      }, 500);
     }
 
     function switchTab(e, tabName) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(tabName).classList.add('active');
-      e.target.classList.add('active');
+
+      const targetTab = document.getElementById(tabName);
+      if (targetTab) {
+        targetTab.classList.add('active');
+      }
+
+      if (e && e.target) {
+        e.target.classList.add('active');
+      }
     }
   </script>
 @endsection

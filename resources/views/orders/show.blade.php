@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('title', 'Chi tiết đơn hàng')
-
 @section('content')
 <x-breadcrumb />
 <style>
@@ -305,6 +304,8 @@
 <div class="fishsh-container">
   <div class="content-wrapper">
     <!-- Order Header -->
+     <div><br></div>
+     <div><br></div>
     <div class="order-header">
       <div class="order-title">
         🐟 Đơn hàng #{{ $order->id }}
