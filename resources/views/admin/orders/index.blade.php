@@ -14,15 +14,46 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="h4 mb-0">Quản lý đơn hàng</h1>
-    <div>
-      <div class="btn-group" role="group">
-        @php $statuses = ['pending' => 'Chờ duyệt', 'confirmed' => 'Đã xác nhận']; @endphp
-        @foreach($statuses as $key => $label)
-          <a href="{{ route('admin.orders.index', ['status' => $key]) }}" class="btn btn-sm {{ $status === $key ? 'btn-success' : 'btn-outline-success' }}">{{ $label }}</a>
-        @endforeach
-      </div>
-    </div>
   </div>
+
+  <form method="GET" action="{{ route('admin.orders.index') }}" class="row g-2 align-items-end mb-3">
+    <div class="col-md-3">
+      <label for="status" class="form-label mb-1">Trạng thái</label>
+      <select name="status" id="status" class="form-select">
+        @php $statusMap = ['pending' => 'Chờ duyệt', 'confirmed' => 'Đã xác nhận', 'completed' => 'Đã hoàn thành']; @endphp
+        <option value="" {{ empty($status) ? 'selected' : '' }}>— Tất cả —</option>
+        @foreach($statusMap as $key => $label)
+          <option value="{{ $key }}" {{ ($status ?? '') === $key ? 'selected' : '' }}>{{ $label }}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="category_id" class="form-label mb-1">Lọc theo danh mục</label>
+      <select name="category_id" id="category_id" class="form-select">
+        <option value="">— Tất cả danh mục —</option>
+        @isset($categories)
+          @foreach($categories as $cat)
+            <option value="{{ $cat->id }}" {{ (string)($categoryId ?? '') === (string)$cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+          @endforeach
+        @endisset
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="product_id" class="form-label mb-1">Lọc theo sản phẩm</label>
+      <select name="product_id" id="product_id" class="form-select">
+        <option value="">— Tất cả sản phẩm —</option>
+        @isset($products)
+          @foreach($products as $prod)
+            <option value="{{ $prod->id }}" {{ (string)($productId ?? '') === (string)$prod->id ? 'selected' : '' }}>{{ $prod->name }}</option>
+          @endforeach
+        @endisset
+      </select>
+    </div>
+    <div class="col-md-2 d-flex gap-2">
+      <button type="submit" class="btn btn-success">Áp dụng</button>
+      <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary">Xoá lọc</a>
+    </div>
+  </form>
 
   <div class="card">
     <div class="table-responsive">
@@ -47,7 +78,7 @@
               </td>
               <td>{{ number_format($order->total_amount, 0, ',', '.') }} đ</td>
               <td>
-                @php $map = ['pending' => 'warning','confirmed' => 'primary']; @endphp
+                @php $map = ['pending' => 'warning','confirmed' => 'primary','completed' => 'success']; @endphp
                 <span class="badge bg-{{ $map[$order->status] ?? 'secondary' }} badge-status" id="order-status-{{ $order->id }}">{{ $order->status }}</span>
               </td>
               <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
@@ -103,7 +134,7 @@
 
         const statusEl = document.getElementById(`order-status-${orderId}`);
         statusEl.textContent = data.order.status;
-        statusEl.className = 'badge badge-status bg-' + ( { pending: 'warning', confirmed: 'primary' }[data.order.status] || 'secondary');
+        statusEl.className = 'badge badge-status bg-' + ( { pending: 'warning', confirmed: 'primary', completed: 'success' }[data.order.status] || 'secondary');
 
         // bật/tắt nút theo trạng thái mới
         const row = document.getElementById(`order-row-${orderId}`);

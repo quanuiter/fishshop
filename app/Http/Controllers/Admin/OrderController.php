@@ -4,23 +4,53 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $status = $request->get('status', 'pending');
+        // Trạng thái lọc: '', 'pending', 'confirmed', 'completed'
+        $status = $request->get('status');
+        $categoryId = $request->get('category_id');
+        $productId = $request->get('product_id');
 
-        $allowed = ['pending','confirmed'];
+        $allowed = ['pending','confirmed','completed'];
         $query = Order::with(['user', 'items.product'])->latest('id');
         if ($status && in_array($status, $allowed)) {
             $query->where('status', $status);
         }
 
+        // Lọc theo danh mục qua items -> product -> category
+        if (!empty($categoryId)) {
+            $query->whereHas('items.product.category', function ($q) use ($categoryId) {
+                $q->where('id', $categoryId);
+            });
+        }
+
+        // Lọc theo sản phẩm qua items -> product
+        if (!empty($productId)) {
+            $query->whereHas('items.product', function ($q) use ($productId) {
+                $q->where('id', $productId);
+            });
+        }
+
         $orders = $query->paginate(10)->withQueryString();
 
-        return view('admin.orders.index', compact('orders', 'status'));
+        // Dữ liệu cho dropdown lọc
+        $categories = Category::orderBy('name')->get(['id','name']);
+        $products = Product::orderBy('name')->get(['id','name']);
+
+        return view('admin.orders.index', [
+            'orders' => $orders,
+            'status' => $status,
+            'categories' => $categories,
+            'products' => $products,
+            'categoryId' => $categoryId,
+            'productId' => $productId,
+        ]);
     }
 
     // AJAX: cập nhật trạng thái đơn hàng

@@ -47,6 +47,10 @@ Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {
     Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
     Route::post('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
     Route::get('orders/{order}/items', [AdminOrderController::class, 'items'])->name('orders.items');
+
+    // Reports
+    Route::get('reports/revenue', [\App\Http\Controllers\Admin\ReportController::class, 'revenue'])
+        ->name('reports.revenue');
 });
 
 Route::middleware('auth')->group(function () {
