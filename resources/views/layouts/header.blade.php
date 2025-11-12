@@ -6,7 +6,7 @@
   <div class="container-lg">
     <!-- Logo với animation -->
     <a class="navbar-brand" href="/">
-      <span class="brand-icon">🎣</span>
+      <span class="brand-icon"></span>
       <span class="brand-text">FishShop</span>
     </a>
 
