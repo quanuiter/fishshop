@@ -543,7 +543,9 @@
             <!-- Form Section -->
             <form method="POST" action="{{ route('checkout.store') }}" class="checkout-form" id="checkoutForm">
                 @csrf
-
+                @if(!empty($promotion))
+                    <input type="hidden" name="promotion_id" value="{{ $promotion->id }}">
+                @endif
                 <!-- Customer Information -->
                 <h2 class="section-title">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -710,21 +712,59 @@
 
                 <div class="order-summary-divider"></div>
 
+                {{-- Tạm tính --}}
                 <div class="summary-row">
                     <span class="label">Tạm tính</span>
-                    <span class="value">₫{{ number_format($total, 0, ',', '.') }}</span>
+
+                    @if(!empty($promotion))
+                        <span class="value text-decoration-line-through text-muted">
+                            ₫{{ number_format($total, 0, ',', '.') }}
+                        </span>
+                    @else
+                        <span class="value">
+                            ₫{{ number_format($total, 0, ',', '.') }}
+                        </span>
+                    @endif
                 </div>
 
+                {{-- Giảm giá nếu có promotion --}}
+                @if(!empty($promotion))
+                    <div class="summary-row">
+                        <span class="label">Khuyến mãi ({{ $promotion->percent }}%)</span>
+                        <span class="value text-danger">
+                            -₫{{ number_format($discount, 0, ',', '.') }}
+                        </span>
+                    </div>
+                @endif
+
+                {{-- Free ship --}}
                 <div class="summary-row shipping">
                     <span class="label">Phí vận chuyển</span>
                     <span class="value">Miễn phí</span>
                 </div>
 
+                {{-- Tổng cộng --}}
                 <div class="summary-total">
                     <span class="label">Tổng cộng</span>
-                    <span class="value">₫{{ number_format($total, 0, ',', '.') }}</span>
+                    <span class="value text-success fw-bold">
+                        ₫{{ number_format($finalTotal ?? $total, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                {{-- Nút chọn / bỏ khuyến mãi --}}
+                <div class="mt-3">
+                    @if(!empty($promotion))
+                        <a href="{{ route('checkout.index') }}" class="text-danger small">
+                            Bỏ khuyến mãi
+                        </a>
+                    @else
+                        <a href="{{ route('promotions.index') }}" class="text-primary small">
+                            Chọn khuyến mãi
+                        </a>
+                    @endif
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -844,10 +884,6 @@
                 e.preventDefault();
                 alert('⚠️ Vui lòng chọn phương thức thanh toán!');
                 return;
-            }
-
-            if (!confirm('Xác nhận đặt hàng với thông tin hiện tại?')) {
-                e.preventDefault();
             }
         });
     </script>

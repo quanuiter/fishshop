@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PromotionController;
 
 Route::get('/', function () {
     return view('homepage');
@@ -25,16 +26,16 @@ Route::get('/chinhsach', function () {
 Route::get('/tintuc', function () {
     return view('tintuc');
 });
-Route::get('/khuyenmai', function () {
-    return view('khuyenmai');
-});
-
 Route::get('/market/filter', [ProductController::class, 'filter'])->name('market.filter');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::get('/cart/remove/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+Route::get('/checkout/success', function () {
+    return view('checkout.success');
+})->name('checkout.success');
+Route::get('/khuyenmai', [PromotionController::class, 'index'])->name('promotions.index');
 
 // Khu vực quản trị
 Route::prefix('admin')->middleware('admin')->name('admin.')->group(function () {

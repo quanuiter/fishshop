@@ -460,7 +460,6 @@
       <option value="name_asc">Tên A-Z</option>
       <option value="name_desc">Tên Z-A</option>
     </select>
-
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Nhập tên sản phẩm...">
       <button id="searchBtn">Tìm kiếm</button>

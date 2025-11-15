@@ -10,7 +10,10 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('promotion_id')->nullable(); // không dùng after()
             $table->decimal('total_amount', 10, 2);
+            $table->integer('discount_amount')->default(0);
+            $table->integer('final_amount')->default(0);
             $table->enum('status', ['pending', 'confirmed', 'shipping', 'completed', 'cancelled'])->default('pending');
             $table->string('name');
             $table->string('phone');
