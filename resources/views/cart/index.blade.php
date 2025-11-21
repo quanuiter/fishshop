@@ -663,11 +663,16 @@ function updateQty(variantId, qty) {
 }
 
 function increaseQty(variantId, currentQty) {
-  const newQty = parseInt(currentQty) + 1;
   const input = document.getElementById('qty-' + variantId);
-  if (input) {
-    input.value = newQty;
+  const maxStock = parseInt(input.getAttribute('max') || 9999);
+  const newQty = parseInt(currentQty) + 1;
+
+  if (newQty > maxStock) {
+    alert('Không đủ hàng trong kho!');
+    return;
   }
+
+  input.value = newQty;
   updateQty(variantId, newQty);
 }
 

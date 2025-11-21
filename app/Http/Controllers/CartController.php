@@ -43,6 +43,7 @@ class CartController extends Controller
                 'color' => $variant->color,
                 'size' => $variant->size,
                 'quantity' => $quantity,
+                'stock' => $variant->stock,
             ];
         }
 
@@ -77,6 +78,12 @@ class CartController extends Controller
             return response()->json(['success' => false, 'message' => 'Không tìm thấy sản phẩm trong giỏ hàng!']);
         }
 
+        // Kiểm tra tồn kho từ DB
+        $variant = ProductVariant::find($variantId);
+        if (!$variant || $quantity > $variant->stock) {
+            return response()->json(['success' => false, 'message' => 'Vượt quá số lượng tồn kho!']);
+        }
+
         if ($quantity <= 0) {
             unset($cart[$variantId]);
         } else {
@@ -84,7 +91,17 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-        return response()->json(['success' => true, 'message' => 'Cập nhật thành công!']);
+
+        // Tính tổng tiền mới
+        $subtotal = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+        $formattedTotal = '₫' . number_format($subtotal, 0, ',', '.');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cập nhật giỏ hàng thành công!',
+            'newSubtotal' => $formattedTotal,
+            'newTotal' => $formattedTotal
+        ]);
     }
 
     public function clear()

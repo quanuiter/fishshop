@@ -36,6 +36,29 @@
       line-height: 1.6;
     }
 
+    .variant-btn.unavailable {
+      opacity: 0.4;
+      background: #f5f5f5;
+      color: #999;
+      position: relative;
+    }
+
+    .variant-btn.unavailable::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: #999;
+      transform: rotate(-15deg);
+    }
+
+    .variant-btn.unavailable:hover {
+      border-color: #ddd;
+      cursor: pointer;
+    }
+
     .container {
       max-width: 1320px;
       margin: 0 auto;
@@ -1161,6 +1184,44 @@
       const selectedColor = document.querySelector('.variant-btn[data-color].active')?.dataset.color;
       const selectedSize = document.querySelector('.variant-btn[data-size].active')?.dataset.size;
 
+      // Update availability for sizes based on selected color
+      if (selectedColor) {
+        sizeBtns.forEach(sizeBtn => {
+          const size = sizeBtn.dataset.size;
+          const hasVariant = variants.some(v => v.color === selectedColor && v.size === size && v.stock > 0);
+
+          if (hasVariant) {
+            sizeBtn.classList.remove('unavailable');
+          } else {
+            sizeBtn.classList.add('unavailable');
+          }
+        });
+      } else {
+        // Remove unavailable class from all sizes if no color selected
+        sizeBtns.forEach(sizeBtn => {
+          sizeBtn.classList.remove('unavailable');
+        });
+      }
+
+      // Update availability for colors based on selected size
+      if (selectedSize) {
+        colorBtns.forEach(colorBtn => {
+          const color = colorBtn.dataset.color;
+          const hasVariant = variants.some(v => v.size === selectedSize && v.color === color && v.stock > 0);
+
+          if (hasVariant) {
+            colorBtn.classList.remove('unavailable');
+          } else {
+            colorBtn.classList.add('unavailable');
+          }
+        });
+      } else {
+        // Remove unavailable class from all colors if no size selected
+        colorBtns.forEach(colorBtn => {
+          colorBtn.classList.remove('unavailable');
+        });
+      }
+
       // Find matching variant
       const variant = variants.find(v => {
         const colorMatch = !selectedColor || !v.color || v.color === selectedColor;
@@ -1190,6 +1251,8 @@
         }
       }
     }
+
+
 
     function increaseQty() {
       const qtyInput = document.getElementById('quantity');

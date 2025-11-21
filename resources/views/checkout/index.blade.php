@@ -565,7 +565,7 @@
                     <div class="form-group">
                         <label for="phone">Số điện thoại <span class="required">*</span></label>
                         <input type="tel" id="phone" name="phone" placeholder="0123456789" value="{{ old('phone') }}"
-                            required>
+                            required pattern="[0-9]{10}" title="Số điện thoại phải đúng 10 chữ số">
                     </div>
 
                     <div class="form-group">

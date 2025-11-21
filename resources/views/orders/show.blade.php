@@ -48,25 +48,6 @@
     border-radius: 50%;
   }
 
-  .order-back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    transition: all 0.3s;
-    position: relative;
-    z-index: 1;
-  }
-
-  .order-back-link:hover {
-    color: #FFD700;
-    transform: translateX(-4px);
-  }
-
   .order-title-section {
     position: relative;
     z-index: 1;
@@ -182,7 +163,7 @@
     background: #ef4444;
   }
 
-  /* Cards - Beautiful Design */
+  /* Cards */
   .card {
     background: white;
     border-radius: 20px;
@@ -202,6 +183,9 @@
     background: linear-gradient(135deg, #f9fdfb 0%, #f0f9f5 100%);
     padding: 28px 36px;
     border-bottom: 2px solid #e8f5f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .card-title {
@@ -226,7 +210,7 @@
     padding: 36px;
   }
 
-  /* Info Grid - Clean Layout */
+  /* Info Grid */
   .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -239,6 +223,7 @@
     border-radius: 16px;
     border-left: 4px solid #1a472a;
     transition: all 0.3s ease;
+    position: relative;
   }
 
   .info-item:hover {
@@ -262,7 +247,25 @@
     line-height: 1.6;
   }
 
-  /* Products Table - Modern Style */
+  /* Editable Input */
+  .info-value input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d0e8dc;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a472a;
+    transition: all 0.3s ease;
+  }
+
+  .info-value input:focus {
+    outline: none;
+    border-color: #1a472a;
+    box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
+  }
+
+  /* Products Table */
   .products-table {
     width: 100%;
     border-collapse: separate;
@@ -338,7 +341,7 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Order Summary - Highlighted */
+  /* Order Summary */
   .order-summary {
     margin-top: 32px;
     padding: 32px;
@@ -385,57 +388,121 @@
     color: #1a472a;
   }
 
-  /* Empty State */
-  .empty-state {
-    text-align: center;
-    padding: 80px 40px;
-  }
-
-  .empty-icon {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #f0f9f5 0%, #e8f5f0 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-  }
-
-  .empty-text {
-    font-size: 16px;
-    color: #6b7280;
-  }
-
   /* Action Buttons */
   .action-section {
     display: flex;
     gap: 12px;
     margin-top: 32px;
+    flex-wrap: wrap;
   }
 
-  .btn-back {
+  .btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 14px 32px;
-    background: white;
-    color: #1a472a;
-    border: 2px solid #1a472a;
     border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
     font-size: 15px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(26, 71, 42, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-back {
+    background: white;
+    color: #1a472a;
+    border: 2px solid #1a472a;
   }
 
   .btn-back:hover {
     background: #1a472a;
     color: white;
     transform: translateX(-4px);
-    box-shadow: 0 4px 16px rgba(26, 71, 42, 0.2);
+  }
+
+  .btn-edit {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+  }
+
+  .btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-save {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+  }
+
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+  }
+
+  .btn-cancel-edit {
+    background: #e5e7eb;
+    color: #374151;
+  }
+
+  .btn-cancel-edit:hover {
+    background: #d1d5db;
+  }
+
+  .btn-cancel-order {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+  }
+
+  .btn-cancel-order:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+  }
+
+  .btn-contact {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+  }
+
+  .btn-contact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+  }
+
+  /* Alert Box */
+  .alert {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .alert-info {
+    background: #dbeafe;
+    color: #1e40af;
+    border-left: 4px solid #3b82f6;
+  }
+
+  .alert-warning {
+    background: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid #f59e0b;
+  }
+
+  .alert-icon {
+    font-size: 20px;
+  }
+
+  /* Hidden class */
+  .hidden {
+    display: none !important;
   }
 
   /* Responsive */
@@ -457,11 +524,13 @@
       gap: 12px;
     }
 
-    .meta-card {
-      padding: 20px;
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px 20px;
     }
 
-    .card-header,
     .card-body {
       padding: 24px 20px;
     }
@@ -469,6 +538,15 @@
     .info-grid {
       grid-template-columns: 1fr;
       gap: 16px;
+    }
+
+    .action-section {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
     }
 
     .products-table {
@@ -509,28 +587,6 @@
       color: #6b7280;
       font-size: 12px;
       text-transform: uppercase;
-    }
-
-    .product-name,
-    .price-right {
-      text-align: right;
-    }
-
-    .order-summary {
-      padding: 24px 20px;
-    }
-
-    .summary-total .summary-value {
-      font-size: 26px;
-    }
-
-    .action-section {
-      flex-direction: column;
-    }
-
-    .btn-back {
-      width: 100%;
-      justify-content: center;
     }
   }
 </style>
@@ -581,26 +637,87 @@
       </div>
     </div>
 
+    <!-- Alert Messages -->
+    @if(session('success'))
+      <div class="alert alert-info">
+        <span class="alert-icon">✓</span>
+        <div>{{ session('success') }}</div>
+      </div>
+    @endif
+
+    @if($order->status === 'pending')
+      <div class="alert alert-info">
+        <span class="alert-icon">ℹ</span>
+        <div>
+          <strong>Đơn hàng đang chờ xác nhận.</strong> 
+          Bạn có thể chỉnh sửa thông tin giao hàng hoặc hủy đơn hàng trong thời gian này.
+        </div>
+      </div>
+    @elseif($order->status === 'processing')
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠</span>
+        <div>
+          <strong>Đơn hàng đang được xử lý.</strong> 
+          Nếu cần thay đổi thông tin, vui lòng liên hệ với chúng tôi để được hỗ trợ.
+        </div>
+      </div>
+    @endif
+
     <!-- Customer Information -->
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">Thông tin giao hàng</h2>
+        @if(in_array($order->status, ['pending', 'processing']))
+          <button id="btnEditInfo" class="btn btn-edit" onclick="toggleEditMode()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Chỉnh sửa
+          </button>
+        @endif
       </div>
       <div class="card-body">
-        <div class="info-grid">
-          <div class="info-item">
-            <div class="info-label">Người nhận</div>
-            <div class="info-value">{{ $order->name }}</div>
+        <form id="formEditInfo" action="{{ route('orders.update', $order->id) }}" method="POST">
+          @csrf
+          @method('PUT')
+          
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">Người nhận</div>
+              <div class="info-value">
+                <span id="displayName">{{ $order->name }}</span>
+                <input type="text" name="name" value="{{ $order->name }}" class="hidden" id="inputName" required>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Số điện thoại</div>
+              <div class="info-value">
+                <span id="displayPhone">{{ $order->phone }}</span>
+                <input type="text" name="phone" value="{{ $order->phone }}" class="hidden" id="inputPhone" required>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Địa chỉ giao hàng</div>
+              <div class="info-value">
+                <span id="displayAddress">{{ $order->address }}</span>
+                <input type="text" name="address" value="{{ $order->address }}" class="hidden" id="inputAddress" required>
+              </div>
+            </div>
           </div>
-          <div class="info-item">
-            <div class="info-label">Số điện thoại</div>
-            <div class="info-value">{{ $order->phone }}</div>
+
+          <div id="editActions" class="action-section hidden" style="margin-top: 24px;">
+            <button type="submit" class="btn btn-save">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Lưu thay đổi
+            </button>
+            <button type="button" class="btn btn-cancel-edit" onclick="cancelEdit()">
+              Hủy bỏ
+            </button>
           </div>
-          <div class="info-item">
-            <div class="info-label">Địa chỉ giao hàng</div>
-            <div class="info-value">{{ $order->address }}</div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
@@ -623,7 +740,16 @@
             <tbody>
               @foreach ($order->items as $item)
                 <tr onclick="window.location='{{ route('product.show', $item->product->id ?? 0) }}'">
-                  <td class="product-name" data-label="Sản phẩm">{{ $item->product->name ?? 'Sản phẩm đã xóa' }}</td>
+                  <td class="product-name" data-label="Sản phẩm">
+                    {{ $item->product->name ?? 'Sản phẩm đã xóa' }}
+<small style="display:block; color:#6b7280; font-size:13px;">
+  @if($item->variant)
+    {{ $item->variant->color ?: '' }}{{ ($item->variant->color && $item->variant->size) ? ' · ' : '' }}{{ $item->variant->size ?: '' }}
+  @else
+    Không có biến thể
+  @endif
+</small>
+                  </td>
                   <td style="text-align: center;" data-label="Số lượng">
                     <span class="quantity-badge">{{ $item->quantity }}</span>
                   </td>
@@ -644,25 +770,21 @@
               <div class="summary-value">Miễn phí</div>
             </div>
             
-    @if($order->promotion_id)
-        <div class="summary-row">
-            <div class="summary-label">
-                Mã giảm giá ({{ $order->promotion->name }} – {{ $order->promotion->percent }}%)
-            </div>
-            <div class="summary-value" style="color:#d9534f;">
-                - ₫{{ number_format($order->discount_amount, 0, ',', '.') }}
-            </div>
-        </div>
-    @endif
+            @if($order->promotion_id)
+              <div class="summary-row">
+                <div class="summary-label">
+                  Mã giảm giá ({{ $order->promotion->name }} – {{ $order->promotion->percent }}%)
+                </div>
+                <div class="summary-value" style="color:#d9534f;">
+                  - ₫{{ number_format($order->discount_amount, 0, ',', '.') }}
+                </div>
+              </div>
+            @endif
+            
             <div class="summary-row summary-total">
               <div class="summary-label">Tổng cộng</div>
               <div class="summary-value">₫{{ number_format($order->final_amount, 0, ',', '.') }}</div>
             </div>
-          </div>
-        @else
-          <div class="empty-state">
-            <div class="empty-icon">📦</div>
-            <div class="empty-text">Đơn hàng không có sản phẩm nào</div>
           </div>
         @endif
       </div>
@@ -670,11 +792,84 @@
 
     <!-- Actions -->
     <div class="action-section">
-      <a href="{{ route('orders.index') }}" class="btn-back">
-        Quay lại danh sách
+      <a href="{{ route('orders.index') }}" class="btn btn-back">
+        ← Quay lại danh sách
       </a>
+
+      @if($order->status === 'pending')
+        <form action="{{ route('orders.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
+          @csrf
+          @method('PUT')
+          <button type="submit" class="btn btn-cancel-order">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            Hủy đơn hàng
+          </button>
+        </form>
+      @endif
+
+      @if(in_array($order->status, ['processing']))
+        <a href="mailto:support@example.com?subject=Yêu cầu thay đổi đơn hàng #{{ $order->id }}" class="btn btn-contact">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Liên hệ hỗ trợ
+        </a>
+      @endif
     </div>
   </div>
 </div>
+
+<script>
+  let isEditMode = false;
+  const originalValues = {
+    name: '{{ $order->name }}',
+    phone: '{{ $order->phone }}',
+    address: '{{ $order->address }}'
+  };
+
+  function toggleEditMode() {
+    isEditMode = true;
+    
+    // Hide display elements
+    document.getElementById('displayName').classList.add('hidden');
+    document.getElementById('displayPhone').classList.add('hidden');
+    document.getElementById('displayAddress').classList.add('hidden');
+    
+    // Show input elements
+    document.getElementById('inputName').classList.remove('hidden');
+    document.getElementById('inputPhone').classList.remove('hidden');
+    document.getElementById('inputAddress').classList.remove('hidden');
+    
+    // Show action buttons, hide edit button
+    document.getElementById('editActions').classList.remove('hidden');
+    document.getElementById('btnEditInfo').classList.add('hidden');
+  }
+
+  function cancelEdit() {
+    isEditMode = false;
+    
+    // Restore original values
+    document.getElementById('inputName').value = originalValues.name;
+    document.getElementById('inputPhone').value = originalValues.phone;
+    document.getElementById('inputAddress').value = originalValues.address;
+    
+    // Show display elements
+    document.getElementById('displayName').classList.remove('hidden');
+    document.getElementById('displayPhone').classList.remove('hidden');
+    document.getElementById('displayAddress').classList.remove('hidden');
+    
+    // Hide input elements
+    document.getElementById('inputName').classList.add('hidden');
+    document.getElementById('inputPhone').classList.add('hidden');
+    document.getElementById('inputAddress').classList.add('hidden');
+    
+    // Hide action buttons, show edit button
+    document.getElementById('editActions').classList.add('hidden');
+    document.getElementById('btnEditInfo').classList.remove('hidden');
+  }
+</script>
 
 @endsection
