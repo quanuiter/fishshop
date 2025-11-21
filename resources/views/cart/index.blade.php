@@ -574,7 +574,7 @@
           <div class="cart-item-actions">
             <div class="quantity-control">
               <button class="qty-btn" onclick="decreaseQty('{{ $item['variant_id'] }}', {{ $item['quantity'] }})">−</button>
-              <input type="number" class="qty-input" id="qty-{{ $item['variant_id'] }}" value="{{ $item['quantity'] }}" min="1" readonly>
+              <input type="number" class="qty-input" id="qty-{{ $item['variant_id'] }}" value="{{ $item['quantity'] }}" min="1" max="{{ $item['stock'] }}"  readonly>
               <button class="qty-btn" onclick="increaseQty('{{ $item['variant_id'] }}', {{ $item['quantity'] }})">+</button>
             </div>
             <a href="{{ route('cart.remove', $item['variant_id']) }}" class="remove-btn">
