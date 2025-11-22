@@ -12,25 +12,25 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        // Trạng thái lọc: '', 'pending', 'confirmed', 'completed'
+        // Trang thai loc: '', 'pending', 'confirmed', 'completed', 'cancelled'
         $status = $request->get('status');
         $categoryId = $request->get('category_id');
         $productId = $request->get('product_id');
 
-        $allowed = ['pending','confirmed','completed'];
+        $allowed = ['pending','confirmed','completed','cancelled'];
         $query = Order::with(['user', 'items.product'])->latest('id');
         if ($status && in_array($status, $allowed)) {
             $query->where('status', $status);
         }
 
-        // Lọc theo danh mục qua items -> product -> category
+        // Loc theo danh muc qua items -> product -> category
         if (!empty($categoryId)) {
             $query->whereHas('items.product.category', function ($q) use ($categoryId) {
                 $q->where('id', $categoryId);
             });
         }
 
-        // Lọc theo sản phẩm qua items -> product
+        // Loc theo san pham qua items -> product
         if (!empty($productId)) {
             $query->whereHas('items.product', function ($q) use ($productId) {
                 $q->where('id', $productId);
@@ -39,7 +39,7 @@ class OrderController extends Controller
 
         $orders = $query->paginate(10)->withQueryString();
 
-        // Dữ liệu cho dropdown lọc
+        // Data cho dropdown loc
         $categories = Category::orderBy('name')->get(['id','name']);
         $products = Product::orderBy('name')->get(['id','name']);
 
@@ -53,37 +53,51 @@ class OrderController extends Controller
         ]);
     }
 
-    // AJAX: cập nhật trạng thái đơn hàng
+    // AJAX: cap nhat trang thai don hang
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
-            'action' => 'required|in:confirm,cancel'
+            'action' => 'required|in:confirm,complete,cancel'
         ]);
 
-        if ($request->action === 'confirm' && $order->status === 'pending') {
-            // Xác nhận → chuyển sang Đã xác nhận
-            $order->status = 'confirmed';
-            $order->save();
-            return response()->json([
-                'success' => true,
-                'order' => ['id' => $order->id, 'status' => $order->status],
-            ]);
-        }
-
-        if ($request->action === 'cancel' && $order->status === 'pending') {
-            // Huỷ đơn khi còn chờ duyệt → xoá khỏi hệ thống
-            $order->delete();
-            return response()->json([
-                'success' => true,
-                'deleted' => true,
-                'order' => ['id' => (int) $order->id],
-            ]);
+        switch ($request->action) {
+            case 'confirm':
+                if ($order->status === 'pending') {
+                    // Chuyen sang trang thai dang xu ly
+                    $order->status = 'confirmed';
+                    $order->save();
+                    return response()->json([
+                        'success' => true,
+                        'order' => ['id' => $order->id, 'status' => $order->status],
+                    ]);
+                }
+                break;
+            case 'complete':
+                if ($order->status === 'confirmed') {
+                    $order->status = 'completed';
+                    $order->save();
+                    return response()->json([
+                        'success' => true,
+                        'order' => ['id' => $order->id, 'status' => $order->status],
+                    ]);
+                }
+                break;
+            case 'cancel':
+                if (in_array($order->status, ['pending', 'confirmed'])) {
+                    $order->status = 'cancelled';
+                    $order->save();
+                    return response()->json([
+                        'success' => true,
+                        'order' => ['id' => $order->id, 'status' => $order->status],
+                    ]);
+                }
+                break;
         }
 
         return response()->json(['success' => false], 422);
     }
 
-    // AJAX: trả về danh sách sản phẩm trong đơn (partial HTML)
+    // AJAX: tra ve danh sach san pham trong don (partial HTML)
     public function items(Order $order)
     {
         $order->load('items.product');
