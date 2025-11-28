@@ -45,11 +45,31 @@ class ProductController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
+        // Lọc theo tồn kho
+        if ($request->stock) {
+            if ($request->stock === 'in_stock') {
+                $query->whereHas('variants', fn($q) => $q->where('stock', '>', 0));
+            } elseif ($request->stock === 'out_of_stock') {
+                $query->whereDoesntHave('variants', fn($q) => $q->where('stock', '>', 0));
+            }
+        }
+
+        // Lọc theo giá
+        if ($request->minPrice || $request->maxPrice) {
+            $query->whereHas('variants', function ($q) use ($request) {
+                if ($request->minPrice) {
+                    $q->where('price', '>=', $request->minPrice);
+                }
+                if ($request->maxPrice) {
+                    $q->where('price', '<=', $request->maxPrice);
+                }
+            });
+        }
+
         // Sắp xếp
         if ($request->sort) {
             switch ($request->sort) {
                 case 'price_asc':
-                    // Sắp theo giá biến thể thấp nhất
                     $query->withMin('variants', 'price')->orderBy('variants_min_price', 'asc');
                     break;
                 case 'price_desc':
@@ -66,7 +86,7 @@ class ProductController extends Controller
 
         $products = $query->get();
 
-        // Trả về partial HTML (cho AJAX)
         return view('market.partials.products', compact('products'))->render();
     }
+
 }

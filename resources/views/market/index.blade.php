@@ -12,7 +12,6 @@
       min-height: 100vh;
     }
 
-    /* Updated banner with subtle animations and enhanced gradient overlay */
     .market-banner {
       position: relative;
       background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') center/cover;
@@ -40,7 +39,6 @@
       50% { background: linear-gradient(135deg, rgba(13, 139, 109, 0.75), rgba(15, 107, 61, 0.7)); }
     }
 
-    /* Added fadeInDown animation to banner title */
     .market-banner h1 {
       position: relative;
       z-index: 2;
@@ -61,7 +59,6 @@
       }
     }
 
-    /* Enhanced category bar with smooth animations */
     .category-bar {
       position: relative;
       z-index: 3;
@@ -133,16 +130,23 @@
       color: #fbbf24;
     }
 
-    /* Enhanced filter bar with modern styling */
+    .category-item.active-category .category-item-icon {
+      background: linear-gradient(135deg, #207a77 0%, #0d8b6d 100%);
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.9), inset 0 0 20px rgba(251, 191, 36, 0.2);
+      transform: scale(1.1);
+    }
+
+    .category-item.active-category span {
+      color: #fbbf24;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Enhanced Filter Bar */
     .filter-bar {
-      background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(248, 250, 248, 0.95));
-      backdrop-filter: blur(10px);
-      padding: 25px 40px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      border-bottom: 2px solid rgba(15, 107, 61, 0.1);
+      background: white;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e5e7eb;
       animation: fadeIn 0.8s ease-out 0.4s backwards;
     }
 
@@ -151,22 +155,65 @@
       to { opacity: 1; }
     }
 
+    .filter-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
     .filter-select {
       background-color: #fff;
-      color: #0f5132;
-      border: 2px solid rgba(15, 107, 61, 0.2);
+      color: #333;
+      border: 1px solid #dee2e6;
       padding: 10px 14px;
       border-radius: 8px;
       outline: none;
       font-weight: 500;
+      font-size: 0.9rem;
       transition: all 0.3s ease;
       cursor: pointer;
+      min-width: 140px;
     }
 
     .filter-select:hover,
     .filter-select:focus {
-      border-color: #fbbf24;
-      box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+      border-color: #1a472a;
+      box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
+    }
+
+    .price-range-inputs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .price-input {
+      width: 110px;
+      padding: 10px 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .price-input:focus {
+      outline: none;
+      border-color: #1a472a;
+      box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
+    }
+
+    .price-separator {
+      color: #6c757d;
+      font-weight: 500;
     }
 
     .search-box {
@@ -178,37 +225,88 @@
 
     .search-box input {
       background-color: #fff;
-      border: 2px solid rgba(15, 107, 61, 0.2);
+      border: 1px solid #dee2e6;
       padding: 10px 15px;
       border-radius: 8px 0 0 8px;
       width: 250px;
       transition: all 0.3s ease;
       font-weight: 500;
+      font-size: 0.9rem;
     }
 
     .search-box input:focus {
       outline: none;
-      border-color: #fbbf24;
-      box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+      border-color: #1a472a;
+      box-shadow: 0 0 0 3px rgba(26, 71, 42, 0.1);
     }
 
     .search-box button {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      background: #1a472a;
       border: none;
       padding: 10px 20px;
       border-radius: 0 8px 8px 0;
       font-weight: 600;
-      color: #0f5132;
+      color: white;
       transition: all 0.3s ease;
       cursor: pointer;
+      font-size: 0.9rem;
     }
 
     .search-box button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+      background: #0f5132;
+      transform: translateY(-1px);
     }
 
-    /* Enhanced products container with gradient background */
+    .btn-reset-filter {
+      padding: 10px 18px;
+      background: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .btn-reset-filter:hover {
+      background: #5a6268;
+      transform: translateY(-1px);
+    }
+
+    .active-filters {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 15px 40px 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e9ecef;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #495057;
+      font-weight: 500;
+    }
+
+    .filter-tag-close {
+      cursor: pointer;
+      color: #6c757d;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .filter-tag-close:hover {
+      color: #dc3545;
+    }
+
     .products-container {
       background: linear-gradient(135deg, #f5f7f6 0%, #e8eef0 100%);
       padding: 40px 60px;
@@ -237,7 +335,6 @@
       z-index: 1;
     }
 
-    /* Added staggered fade-in animations for product cards */
     .product-card {
       background: white;
       border-radius: 14px;
@@ -324,29 +421,10 @@
       color: #fbbf24;
     }
 
-    .product-rating {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 12px;
-      font-size: 0.85rem;
-    }
-
-    .product-rating .stars {
-      color: #fbbf24;
-    }
-
-    .product-rating .count {
-      color: #999;
-    }
-
     .product-price {
       font-size: 1.25rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #0f5132 0%, #0d8b6d 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #1a472a;
       margin-bottom: 14px;
     }
 
@@ -355,57 +433,24 @@
       font-weight: 600;
     }
 
-    .product-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: auto;
-    }
-
-    .btn-add-cart {
-      flex: 1;
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      color: #0f5132;
-      border: none;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-add-cart::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .btn-add-cart:hover::before {
-      left: 100%;
-    }
-
-    .btn-add-cart:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3);
-    }
-
-    .category-item.active-category .category-item-icon {
-      background-color: linear-gradient(135deg, #207a77 0%, #0d8b6d 100%) !important;
-      box-shadow: 0 0 20px rgba(251, 191, 36, 0.9), inset 0 0 20px rgba(251, 191, 36, 0.2) !important;
-      transform: scale(1.1) !important;
-    }
-
-    .category-item.active-category span {
-      color: #e1ebf5 !important;
-      font-weight: 700;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    @media (max-width: 768px) {
+      .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .filter-group {
+        flex-wrap: wrap;
+      }
+      
+      .search-box {
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .search-box input {
+        flex: 1;
+      }
     }
   </style>
 
@@ -453,17 +498,38 @@
   </div>
 
   <div class="filter-bar">
-    <select id="sortSelect" class="filter-select">
-      <option value="">Sắp xếp</option>
-      <option value="price_asc">Giá tăng dần</option>
-      <option value="price_desc">Giá giảm dần</option>
-      <option value="name_asc">Tên A-Z</option>
-      <option value="name_desc">Tên Z-A</option>
-    </select>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Nhập tên sản phẩm...">
-      <button id="searchBtn">Tìm kiếm</button>
+    <div class="filter-container">
+      <div class="filter-group">
+        <select id="sortSelect" class="filter-select">
+          <option value="">Sắp xếp</option>
+          <option value="price_asc">Giá tăng dần</option>
+          <option value="price_desc">Giá giảm dần</option>
+          <option value="name_asc">Tên A-Z</option>
+          <option value="name_desc">Tên Z-A</option>
+        </select>
+
+        <select id="stockSelect" class="filter-select">
+          <option value="">Tình trạng</option>
+          <option value="in_stock">Còn hàng</option>
+          <option value="out_of_stock">Hết hàng</option>
+        </select>
+      </div>
+
+      <div class="filter-group price-range-inputs">
+        <input type="number" id="minPrice" class="price-input" placeholder="Giá từ" min="0">
+        <span class="price-separator">-</span>
+        <input type="number" id="maxPrice" class="price-input" placeholder="Giá đến" min="0">
+      </div>
+
+      <button class="btn-reset-filter" id="resetFilters">Đặt lại</button>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Tìm sản phẩm...">
+        <button id="searchBtn">Tìm</button>
+      </div>
     </div>
+
+    <div class="active-filters" id="activeFilters"></div>
   </div>
 
   <div class="products-container">
@@ -485,47 +551,167 @@
   </div>
 
   <script>
-    document.querySelectorAll('.product-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const url = card.getAttribute('data-url');
-        if (url) window.location.href = url;
-      });
-    });
+    let currentFilters = {
+      category: 'all',
+      sort: '',
+      search: '',
+      stock: '',
+      minPrice: '',
+      maxPrice: ''
+    };
 
-    let currentCategory = 'all';
+    function updateActiveFilters() {
+      const container = document.getElementById('activeFilters');
+      container.innerHTML = '';
+
+      const filterLabels = {
+        sort: {
+          'price_asc': 'Giá tăng dần',
+          'price_desc': 'Giá giảm dần',
+          'name_asc': 'Tên A-Z',
+          'name_desc': 'Tên Z-A'
+        },
+        stock: {
+          'in_stock': 'Còn hàng',
+          'out_of_stock': 'Hết hàng'
+        }
+      };
+
+      if (currentFilters.search) {
+        addFilterTag('search', `Tìm kiếm: ${currentFilters.search}`);
+      }
+
+      if (currentFilters.sort) {
+        addFilterTag('sort', filterLabels.sort[currentFilters.sort]);
+      }
+
+      if (currentFilters.stock) {
+        addFilterTag('stock', filterLabels.stock[currentFilters.stock]);
+      }
+
+      if (currentFilters.minPrice || currentFilters.maxPrice) {
+        const min = currentFilters.minPrice ? `${Number(currentFilters.minPrice).toLocaleString()}đ` : '0đ';
+        const max = currentFilters.maxPrice ? `${Number(currentFilters.maxPrice).toLocaleString()}đ` : '∞';
+        addFilterTag('price', `Giá: ${min} - ${max}`);
+      }
+    }
+
+    function addFilterTag(key, label) {
+      const container = document.getElementById('activeFilters');
+      const tag = document.createElement('div');
+      tag.className = 'filter-tag';
+      tag.innerHTML = `
+        ${label}
+        <span class="filter-tag-close" data-filter="${key}">×</span>
+      `;
+      container.appendChild(tag);
+
+      tag.querySelector('.filter-tag-close').addEventListener('click', () => {
+        removeFilter(key);
+      });
+    }
+
+    function removeFilter(key) {
+      if (key === 'search') {
+        currentFilters.search = '';
+        document.getElementById('searchInput').value = '';
+      } else if (key === 'sort') {
+        currentFilters.sort = '';
+        document.getElementById('sortSelect').value = '';
+      } else if (key === 'stock') {
+        currentFilters.stock = '';
+        document.getElementById('stockSelect').value = '';
+      } else if (key === 'price') {
+        currentFilters.minPrice = '';
+        currentFilters.maxPrice = '';
+        document.getElementById('minPrice').value = '';
+        document.getElementById('maxPrice').value = '';
+      }
+      fetchProducts();
+    }
 
     function setActiveCategory(catElement) {
       document.querySelectorAll('.category-item').forEach(c => c.classList.remove('active-category'));
       catElement.classList.add('active-category');
     }
 
-    function fetchProducts(params = {}) {
-      params.category = currentCategory;
-      let query = new URLSearchParams(params).toString();
+    function fetchProducts() {
+      const params = new URLSearchParams(currentFilters).toString();
 
-      fetch(`{{ route('market.filter') }}?${query}`)
+      fetch(`{{ route('market.filter') }}?${params}`)
         .then(res => res.text())
         .then(html => {
           document.getElementById('productGrid').innerHTML = html;
           document.querySelectorAll('.product-card').forEach(card => {
             card.addEventListener('click', () => window.location.href = card.dataset.url);
           });
-        });
+          updateActiveFilters();
+        })
+        .catch(error => console.error('Error:', error));
     }
 
+    // Event Listeners
     document.getElementById('searchBtn').addEventListener('click', () => {
-      fetchProducts({ search: document.getElementById('searchInput').value });
+      currentFilters.search = document.getElementById('searchInput').value;
+      fetchProducts();
+    });
+
+    document.getElementById('searchInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        currentFilters.search = e.target.value;
+        fetchProducts();
+      }
     });
 
     document.getElementById('sortSelect').addEventListener('change', (e) => {
-      fetchProducts({ sort: e.target.value, search: document.getElementById('searchInput').value });
+      currentFilters.sort = e.target.value;
+      fetchProducts();
+    });
+
+    document.getElementById('stockSelect').addEventListener('change', (e) => {
+      currentFilters.stock = e.target.value;
+      fetchProducts();
+    });
+
+    document.getElementById('minPrice').addEventListener('change', (e) => {
+      currentFilters.minPrice = e.target.value;
+      fetchProducts();
+    });
+
+    document.getElementById('maxPrice').addEventListener('change', (e) => {
+      currentFilters.maxPrice = e.target.value;
+      fetchProducts();
+    });
+
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      currentFilters = {
+        category: currentFilters.category,
+        sort: '',
+        search: '',
+        stock: '',
+        minPrice: '',
+        maxPrice: ''
+      };
+      document.getElementById('searchInput').value = '';
+      document.getElementById('sortSelect').value = '';
+      document.getElementById('stockSelect').value = '';
+      document.getElementById('minPrice').value = '';
+      document.getElementById('maxPrice').value = '';
+      fetchProducts();
     });
 
     document.querySelectorAll('.category-item').forEach(cat => {
       cat.addEventListener('click', () => {
-        currentCategory = cat.getAttribute('data-category');
+        currentFilters.category = cat.getAttribute('data-category');
         setActiveCategory(cat);
         fetchProducts();
+      });
+    });
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const url = card.getAttribute('data-url');
+        if (url) window.location.href = url;
       });
     });
 

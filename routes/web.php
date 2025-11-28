@@ -8,7 +8,10 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\CatchLogController;
 
+Route::get('/tintuc', [CatchLogController::class, 'index'])->name('tintuc');
+Route::post('/tintuc/post', [CatchLogController::class, 'store'])->name('catchlog.store')->middleware('auth');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 Route::get('/market', [ProductController::class, 'index'])->name('market.index');
@@ -21,9 +24,6 @@ Route::get('/chinhsach', function () {
     return view('chinhsach');
 });
 
-Route::get('/tintuc', function () {
-    return view('tintuc');
-});
 Route::get('/market/filter', [ProductController::class, 'filter'])->name('market.filter');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -61,3 +61,4 @@ Route::middleware('auth')->group(function () {
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
     Route::put('/orders/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 });
+Route::delete('/catchlog/{id}', [CatchLogController::class, 'destroy'])->name('catchlog.destroy');
