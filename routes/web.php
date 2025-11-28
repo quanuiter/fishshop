@@ -9,9 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PromotionController;
 
-Route::get('/', function () {
-    return view('homepage');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 Route::get('/market', [ProductController::class, 'index'])->name('market.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
