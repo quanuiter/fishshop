@@ -378,11 +378,11 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            Tin tức
+            Khám phá
           </a>
           <ul class="dropdown-menu dropdown-menu-custom" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Bài viết mới</a></li>
-            <li><a class="dropdown-item" href="/tintuc">Tin tức</a></li>
+            <li><a class="dropdown-item" href="/tintuc">Nhật ký cần thủ</a></li>
             <li><a class="dropdown-item" href="/khuyenmai">Khuyến mãi</a></li>
             <li>
               <hr class="dropdown-divider">
