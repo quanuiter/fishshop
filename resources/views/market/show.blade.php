@@ -37,26 +37,30 @@
     }
 
     .variant-btn.unavailable {
-      opacity: 0.4;
-      background: #f5f5f5;
+      opacity: 0.5;
+      background: #f8f8f8;
       color: #999;
       position: relative;
+      cursor: not-allowed;
+      border-color: #ddd;
     }
+
 
     .variant-btn.unavailable::after {
       content: '';
       position: absolute;
       top: 50%;
-      left: 10%;
-      right: 10%;
-      height: 1px;
+      left: 5%;
+      right: 5%;
+      height: 2px;
       background: #999;
       transform: rotate(-15deg);
     }
 
     .variant-btn.unavailable:hover {
       border-color: #ddd;
-      cursor: pointer;
+      background: #f8f8f8;
+      transform: none;
     }
 
     .container {
@@ -1167,60 +1171,58 @@
       if (el) el.classList.add('active');
     }
 
-    function selectVariant(btn) {
+        function selectVariant(btn) {
       const colorBtns = document.querySelectorAll('.variant-btn[data-color]');
       const sizeBtns = document.querySelectorAll('.variant-btn[data-size]');
 
-      // Remove active from same type
+      // Nếu click vào màu
       if (btn.dataset.color) {
         colorBtns.forEach(b => b.classList.remove('active'));
-      }
-      if (btn.dataset.size) {
+        btn.classList.add('active');
+
+        const selectedColor = btn.dataset.color;
+
+        // Reset size selection khi đổi màu
         sizeBtns.forEach(b => b.classList.remove('active'));
-      }
-      btn.classList.add('active');
 
-      // Get selected color and size
-      const selectedColor = document.querySelector('.variant-btn[data-color].active')?.dataset.color;
-      const selectedSize = document.querySelector('.variant-btn[data-size].active')?.dataset.size;
-
-      // Update availability for sizes based on selected color
-      if (selectedColor) {
+        // Cập nhật availability cho các kích thước dựa trên màu đã chọn
         sizeBtns.forEach(sizeBtn => {
           const size = sizeBtn.dataset.size;
           const hasVariant = variants.some(v => v.color === selectedColor && v.size === size && v.stock > 0);
 
           if (hasVariant) {
             sizeBtn.classList.remove('unavailable');
+            sizeBtn.disabled = false;
           } else {
             sizeBtn.classList.add('unavailable');
+            sizeBtn.disabled = true;
           }
-        });
-      } else {
-        // Remove unavailable class from all sizes if no color selected
-        sizeBtns.forEach(sizeBtn => {
-          sizeBtn.classList.remove('unavailable');
         });
       }
 
-      // Update availability for colors based on selected size
-      if (selectedSize) {
-        colorBtns.forEach(colorBtn => {
-          const color = colorBtn.dataset.color;
-          const hasVariant = variants.some(v => v.size === selectedSize && v.color === color && v.stock > 0);
+      // Nếu click vào kích thước
+      if (btn.dataset.size) {
+        const selectedColor = document.querySelector('.variant-btn[data-color].active')?.dataset.color;
 
-          if (hasVariant) {
-            colorBtn.classList.remove('unavailable');
-          } else {
-            colorBtn.classList.add('unavailable');
-          }
-        });
-      } else {
-        // Remove unavailable class from all colors if no size selected
-        colorBtns.forEach(colorBtn => {
-          colorBtn.classList.remove('unavailable');
-        });
+        // Chỉ cho phép chọn size nếu đã chọn màu
+        if (!selectedColor) {
+          alert('Vui lòng chọn màu sắc trước!');
+          return;
+        }
+
+        // Kiểm tra xem size có available với màu đã chọn không
+        if (btn.classList.contains('unavailable') || btn.disabled) {
+          alert('Kích thước này không có sẵn với màu đã chọn!');
+          return;
+        }
+
+        sizeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       }
+
+      // Get selected color and size
+      const selectedColor = document.querySelector('.variant-btn[data-color].active')?.dataset.color;
+      const selectedSize = document.querySelector('.variant-btn[data-size].active')?.dataset.size;
 
       // Find matching variant
       const variant = variants.find(v => {
