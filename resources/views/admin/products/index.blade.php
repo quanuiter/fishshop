@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý sản phẩm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style> body { padding-top: 70px; } </style>
+    <style>
+        body { padding-top: 70px; }
+        /* Giữ kích thước mũi tên pagination nhỏ gọn */
+        .pagination svg { width: 16px; height: 16px; }
+        .pagination .page-link { padding: 6px 12px; }
+    </style>
     @php use Illuminate\Support\Str; @endphp
 </head>
 <body>
@@ -67,7 +72,7 @@
     </div>
 
     <div class="mt-3">
-        {{ $products->links() }}
+        {{ $products->links('pagination::bootstrap-5') }}
     </div>
 </div>
 
