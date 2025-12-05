@@ -9,7 +9,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\CatchLogController;
+use App\Http\Controllers\ChatbotController;
 
+Route::post('/chatbot/send', [ChatbotController::class, 'chat'])->name('chatbot.send');
 Route::get('/tintuc', [CatchLogController::class, 'index'])->name('tintuc');
 Route::post('/tintuc/post', [CatchLogController::class, 'store'])->name('catchlog.store')->middleware('auth');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
