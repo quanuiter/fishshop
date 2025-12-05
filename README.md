@@ -1,61 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Dưới đây là phiên bản `README.md` đã được loại bỏ các biểu tượng (icon):
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+-----
 
-## About Laravel
+# FishShop - Hệ Thống Thương Mại Điện Tử Dành Cho Dân Câu
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**FishShop** là một nền tảng website thương mại điện tử chuyên cung cấp dụng cụ câu cá, kết hợp với các tiện ích cộng đồng cho cần thủ như nhật ký câu cá và dự báo thời tiết. Dự án được xây dựng trên framework **Laravel** mạnh mẽ.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tính Năng Nổi Bật
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Dành cho Khách Hàng (Người dùng)
 
-## Learning Laravel
+  * **Mua sắm trực tuyến:** Duyệt danh mục sản phẩm đa dạng (Cần câu, máy câu, mồi câu, phụ kiện...).
+  * **Giỏ hàng & Thanh toán:** Thêm sản phẩm vào giỏ, quản lý số lượng và tiến hành đặt hàng.
+  * **Quản lý tài khoản:** Đăng ký, đăng nhập, quên mật khẩu, xem lịch sử đơn hàng.
+  * **Nhật Ký Câu Cá (Catch Logs):** Tính năng độc đáo cho phép người dùng lưu lại thành quả các chuyến đi câu (hình ảnh, loại cá, thông tin).
+  * **Tiện ích:**
+      * **Chatbot:** Hỗ trợ giải đáp thắc mắc tự động.
+      * **Dự báo thời tiết:** Tích hợp dịch vụ thời tiết để lên kế hoạch đi câu.
+  * **Tin tức & Khuyến mãi:** Cập nhật các bài viết về kỹ thuật câu và các chương trình giảm giá.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Dành cho Quản Trị Viên (Admin)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  * **Dashboard:** Xem báo cáo doanh thu, thống kê tổng quan.
+  * **Quản lý sản phẩm:** Thêm, sửa, xóa sản phẩm, biến thể sản phẩm (màu sắc, kích thước) và hình ảnh.
+  * **Quản lý đơn hàng:** Theo dõi trạng thái đơn hàng, duyệt đơn.
+  * **Quản lý danh mục:** Tổ chức cây danh mục sản phẩm.
+  * **Báo cáo:** Xuất báo cáo doanh thu.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Công Nghệ Sử Dụng
 
-## Laravel Sponsors
+  * **Backend:** PHP, Laravel Framework (Phiên bản mới nhất, hỗ trợ Vite).
+  * **Frontend:** Blade Templates, SCSS, JavaScript, Bootstrap.
+  * **Database:** MySQL.
+  * **Công cụ khác:** Composer, NPM/Yarn.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Yêu Cầu Cài Đặt
 
-### Premium Partners
+Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+  * PHP \>= 8.2
+  * Composer
+  * Node.js & NPM
+  * MySQL
 
-## Contributing
+## Hướng Dẫn Cài Đặt (Installation)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Làm theo các bước sau để chạy dự án trên máy cục bộ (Localhost):
 
-## Code of Conduct
+1.  **Clone dự án về máy:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    git clone https://github.com/quanuiter/fishshop.git
+    cd fishshop
+    ```
 
-## Security Vulnerabilities
+2.  **Cài đặt các gói phụ thuộc PHP:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    composer install
+    ```
+
+3.  **Cài đặt các gói phụ thuộc Frontend:**
+
+    ```bash
+    npm install
+    ```
+
+4.  **Cấu hình môi trường:**
+
+      * Copy file `.env.example` thành `.env`:
+
+    <!-- end list -->
+
+    ```bash
+    cp .env.example .env
+    ```
+
+      * Mở file `.env` và cấu hình thông tin database của bạn (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
+
+5.  **Tạo Key ứng dụng:**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+6.  **Chạy Migration và Seed dữ liệu mẫu:**
+    *(Lệnh này sẽ tạo bảng và thêm dữ liệu mẫu như Admin, Sản phẩm, Danh mục)*
+
+    ```bash
+    php artisan migrate --seed
+    ```
+
+    *Lưu ý: Kiểm tra file `database/seeders/AdminUserSeeder.php` để biết tài khoản Admin mặc định.*
+
+7.  **Chạy dự án:**
+    Bạn cần mở 2 terminal để chạy song song:
+
+      * Terminal 1 (Chạy Laravel Server):
+        ```bash
+        php artisan serve
+        ```
+      * Terminal 2 (Chạy Vite để build assets):
+        ```bash
+        npm run dev
+        ```
+
+8.  **Truy cập:**
+    Mở trình duyệt và truy cập: `http://localhost:8000`
+
+## Cấu Trúc Thư Mục Chính
+
+  * `app/Http/Controllers`: Chứa logic xử lý chính (Admin, Auth, Cart, v.v.).
+  * `app/Models`: Các model tương tác với database (Product, Order, CatchLog...).
+  * `resources/views`: Giao diện người dùng (Blade templates).
+      * `admin/`: Giao diện trang quản trị.
+      * `market/`: Giao diện cửa hàng/chợ.
+  * `routes/web.php`: Định nghĩa các đường dẫn (URL) của trang web.
+  * `database/migrations`: Cấu trúc cơ sở dữ liệu.
+
+## Đóng Góp (Contributing)
+
+Nếu bạn muốn đóng góp cho dự án:
+
+1.  Fork dự án.
+2.  Tạo nhánh mới (`git checkout -b feature/TinhNangMoi`).
+3.  Commit thay đổi (`git commit -m 'Thêm tính năng mới'`).
+4.  Push lên branch (`git push origin feature/TinhNangMoi`).
+5.  Tạo Pull Request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Dự án này là mã nguồn mở.
