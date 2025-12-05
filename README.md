@@ -1,7 +1,3 @@
-Dưới đây là phiên bản `README.md` đã được loại bỏ các biểu tượng (icon):
-
------
-
 # FishShop - Hệ Thống Thương Mại Điện Tử Dành Cho Dân Câu
 
 **FishShop** là một nền tảng website thương mại điện tử chuyên cung cấp dụng cụ câu cá, kết hợp với các tiện ích cộng đồng cho cần thủ như nhật ký câu cá và dự báo thời tiết. Dự án được xây dựng trên framework **Laravel** mạnh mẽ.
