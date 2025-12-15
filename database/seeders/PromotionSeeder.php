@@ -13,8 +13,8 @@ class PromotionSeeder extends Seeder
         Promotion::truncate(); // xoá sạch để seed lại
 
         Promotion::create([
-            'name'        => 'Giảm 20% cần câu Shimano',
-            'description' => 'Ưu đãi lớn cho dòng cần Shimano chính hãng. Số lượng có hạn.',
+            'name'        => 'Giảm 20%',
+            'description' => 'Ưu đãi lớn cho sản phẩm trên shop, Số lượng có hạn.',
             'percent'     => 20,
             'start_date'  => Carbon::now()->subDays(5),
             'end_date'    => Carbon::now()->addDays(10),
@@ -22,8 +22,8 @@ class PromotionSeeder extends Seeder
         ]);
 
         Promotion::create([
-            'name'        => 'Mua máy Daiwa tặng 15% toàn đơn',
-            'description' => 'Giảm 15% khi mua bất kỳ máy Daiwa nào.',
+            'name'        => 'Mua dụng cụ bất kì tặng 15% toàn đơn',
+            'description' => 'Giảm 15% khi mua bất kỳ sản phẩm nào.',
             'percent'     => 15,
             'start_date'  => Carbon::now()->subDays(2),
             'end_date'    => Carbon::now()->addDays(20),
@@ -31,8 +31,8 @@ class PromotionSeeder extends Seeder
         ]);
 
         Promotion::create([
-            'name'        => 'Combo cần + máy giảm 25%',
-            'description' => 'Áp dụng cho khách mua combo cần câu + máy câu.',
+            'name'        => 'Giảm 25% cho mọi đơn hàng',
+            'description' => 'Áp dụng cho tất cả sản phẩm.',
             'percent'     => 25,
             'start_date'  => Carbon::now()->addDays(2), // sắp diễn ra
             'end_date'    => Carbon::now()->addDays(15),
@@ -40,7 +40,7 @@ class PromotionSeeder extends Seeder
         ]);
 
         Promotion::create([
-            'name'        => 'Giảm 10% cho đơn hàng từ 500k',
+            'name'        => 'Giảm 10% cho mọi đơn hàng',
             'description' => 'Áp dụng cho mọi sản phẩm trong cửa hàng.',
             'percent'     => 10,
             'start_date'  => Carbon::now()->subDays(7),
