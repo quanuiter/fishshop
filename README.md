@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 =======
 # FishShop - Hệ Thống Thương Mại Điện Tử Dành Cho Dân Câu
->>>>>>> 17a8481efd4c6d3b2b4788e3e0166366b7aefde9
 
 Để chạy dự án này, máy tính của bạn cần cài đặt các phần mềm sau:
 - PHP >= 8.1
@@ -145,4 +143,3 @@ Nếu bạn muốn đóng góp cho dự án:
 ## License
 
 Dự án này là mã nguồn mở.
->>>>>>> 17a8481efd4c6d3b2b4788e3e0166366b7aefde9
