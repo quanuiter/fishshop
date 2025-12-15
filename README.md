@@ -7,21 +7,21 @@
 - Node.js & NPM
 - MySQL hoặc MariaDB
 
-## Huong dan cai dat
+## Hướng dẫn cài đặt
 
 Làm theo các bước sau để thiết lập dự án trên môi trường local:
 
-### 1. Clone du an
+### 1. Clone dự án
 Sao chép mã nguồn về máy của bạn:
 git clone <link-repo-cua-ban>
 cd fishshop
 
-### 2. Cai dat cac thu vien phu thuoc
+### 2. Cài đặt thư viện phụ thuộc
 Chạy lệnh sau để cài đặt các gói PHP và JavaScript cần thiết:
 composer install
 npm install
 
-### 3. Cau hinh moi truong
+### 3. Cấu hình môi trường
 Sao chép file cấu hình mẫu và tạo file .env mới:
 cp .env.example .env
 
@@ -33,19 +33,19 @@ DB_DATABASE=fishshop
 DB_USERNAME=root
 DB_PASSWORD=
 
-### 4. Tao Application Key
+### 4. Tạo Application Key
 Chạy lệnh sau để tạo khóa mã hóa cho ứng dụng:
 php artisan key:generate
 
-### 5. Khoi tao co so du lieu va du lieu mau (Seeding)
+### 5. Khởi tạo cơ sở dữ liệu và dữ liệu mẫu (Seeding)
 Bước này rất quan trọng để tạo tài khoản Admin và dữ liệu sản phẩm mẫu. Lệnh này sẽ chạy các file migration và seeder (bao gồm AdminUserSeeder, ProductSeeder, v.v.):
 php artisan migrate --seed
 
-### 6. Bien dich Assets (Frontend)
+### 6. Biên dịch Assets (Frontend)
 Để hiển thị giao diện chính xác, bạn cần biên dịch các file CSS và JS:
 npm run build
 
-### 7. Chay Server
+### 7. Chạy Server
 Khởi chạy server local của Laravel:
 php artisan serve
 
@@ -53,7 +53,7 @@ Sau khi chạy xong, truy cập website tại địa chỉ: http://localhost:800
 
 ---
 
-## Thong tin tai khoan Admin
+## Thông tin tài khoản Admin
 
 Sau khi chạy lệnh "php artisan migrate --seed", hệ thống sẽ tự động tạo một tài khoản quản trị viên mặc định.
 
@@ -64,9 +64,9 @@ Lưu ý: Thông tin này được cấu hình trong file "database/seeders/Admin
 
 ---
 
-## Huong dan su dung va Chuc nang
+## Hướng dẫn sử dụng và chức năng
 
-### 1. Danh cho Khach hang (User)
+### 1. Dành cho khách hàng (User)
 Người dùng truy cập vào trang chủ để thực hiện các chức năng:
 - Dang ky / Dang nhap: Tạo tài khoản thành viên để mua hàng.
 - Xem san pham: Duyệt danh sách cần câu, máy câu, mồi câu và xem chi tiết sản phẩm.
@@ -75,7 +75,7 @@ Người dùng truy cập vào trang chủ để thực hiện các chức năng
 - Nhat ky cau ca (Catch Log): Người dùng có thể đăng tải hình ảnh và nhật ký về các chuyến đi câu của mình để chia sẻ với cộng đồng.
 - Chatbot: Hỗ trợ giải đáp thắc mắc cơ bản.
 
-### 2. Danh cho Quan tri vien (Admin)
+### 2. Dành cho quản trị viên (Admin)
 Truy cập vào đường dẫn "/admin" hoặc đăng nhập bằng tài khoản Admin để vào trang Dashboard. Các chức năng bao gồm:
 - Quan ly Danh muc: Thêm, sửa, xóa các loại sản phẩm.
 - Quan ly San pham: Quản lý thông tin chi tiết, giá cả, hình ảnh và các biến thể của sản phẩm.
