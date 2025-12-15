@@ -1,8 +1,7 @@
-# FishShop - He thong Website Ban dung cu Cau ca
-
-FishShop là một ứng dụng web thương mại điện tử chuyên cung cấp các dụng cụ câu cá, được xây dựng trên nền tảng Laravel Framework. Hệ thống bao gồm đầy đủ các tính năng cho người dùng mua hàng và trang quản trị dành cho Admin để quản lý sản phẩm, đơn hàng và doanh thu.
-
-## Yeu cau he thong
+<<<<<<< HEAD
+=======
+# FishShop - Hệ Thống Thương Mại Điện Tử Dành Cho Dân Câu
+>>>>>>> 17a8481efd4c6d3b2b4788e3e0166366b7aefde9
 
 Để chạy dự án này, máy tính của bạn cần cài đặt các phần mềm sau:
 - PHP >= 8.1
@@ -85,11 +84,65 @@ Truy cập vào đường dẫn "/admin" hoặc đăng nhập bằng tài khoả
 - Quan ly Don hang: Xem danh sách đơn hàng mới, cập nhật trạng thái xử lý đơn hàng.
 - Quan ly Khuyen mai: Tạo và quản lý các mã giảm giá hoặc chương trình khuyến mãi.
 - Bao cao Doanh thu: Xem biểu đồ thống kê doanh thu theo thời gian.
+    <!-- end list -->
 
-## Cau truc thu muc chinh
-- app/Http/Controllers/Admin: Chứa mã nguồn xử lý logic cho trang quản trị.
-- app/Models: Chứa các model tương tác với cơ sở dữ liệu (Product, Order, User...).
-- database/migrations: Các file định nghĩa cấu trúc bảng trong cơ sở dữ liệu.
-- database/seeders: Các file tạo dữ liệu mẫu.
-- resources/views: Chứa giao diện người dùng (Blade templates).
-- routes/web.php: Định nghĩa các đường dẫn (URL) của trang web.
+    ```bash
+    cp .env.example .env
+    ```
+
+      * Mở file `.env` và cấu hình thông tin database của bạn (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
+
+5.  **Tạo Key ứng dụng:**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+6.  **Chạy Migration và Seed dữ liệu mẫu:**
+    *(Lệnh này sẽ tạo bảng và thêm dữ liệu mẫu như Admin, Sản phẩm, Danh mục)*
+
+    ```bash
+    php artisan migrate --seed
+    ```
+
+    *Lưu ý: Kiểm tra file `database/seeders/AdminUserSeeder.php` để biết tài khoản Admin mặc định.*
+
+7.  **Chạy dự án:**
+    Bạn cần mở 2 terminal để chạy song song:
+
+      * Terminal 1 (Chạy Laravel Server):
+        ```bash
+        php artisan serve
+        ```
+      * Terminal 2 (Chạy Vite để build assets):
+        ```bash
+        npm run dev
+        ```
+
+8.  **Truy cập:**
+    Mở trình duyệt và truy cập: `http://localhost:8000`
+
+## Cấu Trúc Thư Mục Chính
+
+  * `app/Http/Controllers`: Chứa logic xử lý chính (Admin, Auth, Cart, v.v.).
+  * `app/Models`: Các model tương tác với database (Product, Order, CatchLog...).
+  * `resources/views`: Giao diện người dùng (Blade templates).
+      * `admin/`: Giao diện trang quản trị.
+      * `market/`: Giao diện cửa hàng/chợ.
+  * `routes/web.php`: Định nghĩa các đường dẫn (URL) của trang web.
+  * `database/migrations`: Cấu trúc cơ sở dữ liệu.
+
+## Đóng Góp (Contributing)
+
+Nếu bạn muốn đóng góp cho dự án:
+
+1.  Fork dự án.
+2.  Tạo nhánh mới (`git checkout -b feature/TinhNangMoi`).
+3.  Commit thay đổi (`git commit -m 'Thêm tính năng mới'`).
+4.  Push lên branch (`git push origin feature/TinhNangMoi`).
+5.  Tạo Pull Request.
+
+## License
+
+Dự án này là mã nguồn mở.
+>>>>>>> 17a8481efd4c6d3b2b4788e3e0166366b7aefde9
