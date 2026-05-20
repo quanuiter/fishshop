@@ -1,6 +1,6 @@
 [![FishShop Logo](https://i.imgur.com/WmMnSRt.png)](https://www.uit.edu.vn/ "Trường Đại học Công nghệ Thông tin")
 
-# **Nhập môn Công nghệ Phần mềm**
+# **Phát triển ứng dụng web**
 
 ## Hệ Thống Thương Mại Điện Tử Dành Cho Dân Câu — FishShop
 
@@ -460,4 +460,4 @@ Dự án này là mã nguồn mở và được phátriển cho mục đích h�
 
 ---
 
-**© 2025–2026 – UIT · Nhập môn Công nghệ Phần mềm · ĐHQG TP.HCM**
+**© 2025–2026 – UIT · Phát triển ứng dụng web · ĐHQG TP.HCM**
